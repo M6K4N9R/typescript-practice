@@ -28,9 +28,9 @@ function placeOrder(name: string) {
   const selectedPizza = menu.find((pizzaObj) => pizzaObj.name === name);
   if (!selectedPizza || selectedPizza === undefined) {
     console.error(`The ${name} is not on our menu. Please check if you wrote the name correctly and try one more time.`)
-    console.log("Selected Pizza:", selectedPizza);
     return;
-  }
+}
+console.log("Selected Pizza:", selectedPizza);
 
   cashInRegister += selectedPizza.price;
   orderQueue.push({ pizza: selectedPizza, id: nextOrderId, status: "ordered" });
@@ -41,14 +41,14 @@ function placeOrder(name: string) {
 }
 
 function completeOrder(id: number) {
-  let order = orderQueue.find((pizza) => pizza.id === id);
-  if (!order || order === undefined) {
-    console.error(`The ${order} that you are looking for is not in the Order Queue`);
+  let orderIndex = orderQueue.findIndex((pizza) => pizza.id === id);
+  if (orderIndex === -1) {
+    console.error(`The order that you are looking for is not in the Order Queue`);
     return;
   }
-  order = { ...order, status: "completed" };
+  orderQueue[orderIndex].status = "completed"
 
-  return completeOrder;
+  return orderQueue[orderIndex];
 }
 
 addNewPizza({ name: "Chicken Bacon Ranch", price: 12 });
@@ -91,7 +91,7 @@ let person2: Person = {
   },
 };
 
-function displayInfo(person) {
+function displayInfo(person: Person) {
   console.log(`${person.name} lives at ${person.address?.street}`);
 }
 
