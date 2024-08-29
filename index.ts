@@ -21,11 +21,11 @@ let cashInRegister = 100;
 const orderQueue: Order[] = [];
 let nextOrderId = 1;
 
-function addNewPizza(pizzaObj: Pizza) {
+function addNewPizza(pizzaObj: Pizza): void {
   menu.push(pizzaObj);
 }
 
-function placeOrder(name: string) {
+function placeOrder(name: string): Pizza | undefined {
   const selectedPizza = menu.find((pizzaObj) => pizzaObj.name === name);
   if (!selectedPizza || selectedPizza === undefined) {
     console.error(
@@ -47,7 +47,7 @@ function placeOrder(name: string) {
   return selectedPizza;
 }
 
-function completeOrder(id: number) {
+function completeOrder(id: number): Order | undefined {
   let orderIndex = orderQueue.findIndex((pizza) => pizza.id === id);
   if (orderIndex === -1) {
     console.error(
@@ -60,7 +60,7 @@ function completeOrder(id: number) {
   return orderQueue[orderIndex];
 }
 
-function getPizzaDetail(identifier: string | number) {
+function getPizzaDetail(identifier: string | number): Pizza | undefined {
   if (typeof identifier === "string") {
     return menu.find(
       (pizza) => pizza.name.toLowerCase() === identifier.toLowerCase()
@@ -68,7 +68,7 @@ function getPizzaDetail(identifier: string | number) {
   } else if (typeof identifier === "number") {
     return menu.find((pizza) => pizza.id === identifier);
   } else {
-    throw new TypeError("Parameter must either be a string or a number")
+    throw new TypeError("Parameter must either be a string or a number ");
   }
 }
 
@@ -82,6 +82,8 @@ completeOrder(1);
 console.log("Menu:", menu);
 console.log("Cach in register:", cashInRegister);
 console.log("Order queue:", orderQueue);
+
+// =============================== Just Practice ===================
 
 type Address = {
   street: string;
@@ -117,5 +119,28 @@ function displayInfo(person: Person) {
 }
 
 displayInfo(person1);
+
+type UserRole = "guest" | "member" | "admin";
+
+type User = {
+  username: string;
+  role: UserRole;
+};
+
+const users: User[] = [
+  { username: "bob-williams", role: "member" },
+  { username: "chack-norris", role: "admin" },
+  { username: "serena-williams", role: "guest" },
+];
+
+function fetchUserDetails(username: string): User {
+  const user = users.find((user) => user.username === username);
+  if (!user) {
+    throw new Error(`user with username ${username} not found`);
+  }
+  return user;
+}
+
+// =============================== Just Practice End ===================
 
 export {};
