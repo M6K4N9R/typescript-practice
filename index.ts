@@ -21,9 +21,12 @@ let menu: Pizza[] = [
   { id: nextPizzaId++, name: "Veggie", price: 9 },
 ];
 
-function addNewPizza(pizzaObj: Pizza): void {
-  pizzaObj.id = nextPizzaId++;
-  menu.push(pizzaObj);
+function addNewPizza(pizzaObj: Omit<Pizza, "id">): Pizza {
+  const newPizza: Pizza = { id: nextPizzaId++, ...pizzaObj };
+
+  menu.push(newPizza);
+
+  return newPizza;
 }
 
 function placeOrder(name: string): Pizza | undefined {
@@ -73,9 +76,9 @@ function getPizzaDetail(identifier: string | number): Pizza | undefined {
   }
 }
 
-// addNewPizza({ name: "Chicken Bacon Ranch", price: 12 });
-// addNewPizza("BBQ Chicken", 12);
-// addNewPizza("Spicy Sausage", 11);
+addNewPizza({ name: "Chicken Bacon Ranch", price: 12 });
+addNewPizza({ name: "BBQ Chicken", price: 12 });
+addNewPizza({ name: "Spicy Sausage", price: 11 });
 
 placeOrder("Chicken Bacon Ranch");
 completeOrder(1);
@@ -127,7 +130,7 @@ type User = {
   role: "contributor" | "member" | "admin";
 };
 
-let nextUserId = 1
+let nextUserId = 1;
 
 const users: User[] = [
   { id: nextUserId++, username: "bob-williams", role: "member" },
@@ -135,7 +138,6 @@ const users: User[] = [
 ];
 
 type UpdatedUser = Partial<User>;
-
 
 function updateUser(id: number, updates: UpdatedUser) {
   const userToUpdate = users.find((user) => user.id === id);
@@ -147,14 +149,13 @@ function updateUser(id: number, updates: UpdatedUser) {
   Object.assign(userToUpdate, updates);
 }
 
-function addNewUser(newUser: any): User {
-const user: User = {id: nextUserId++, ...newUser}
-users.push(user);
-return user
+function addNewUser(newUser: Omit<User, "id">): User {
+  const user: User = { id: nextUserId++, ...newUser };
+  users.push(user);
+  return user;
 }
 
-addNewUser({username: "new-user", role: "member"})
-
+addNewUser({ username: "new-user", role: "member" });
 
 function fetchUserDetails(username: string): User {
   const user = users.find((user) => user.username === username);
@@ -164,12 +165,10 @@ function fetchUserDetails(username: string): User {
   return user;
 }
 
-
 updateUser(1, { username: "new-john-doe" });
 updateUser(2, { role: "contributor" });
 
 console.log(users);
-
 
 // =============================== Just Practice End ===================
 
