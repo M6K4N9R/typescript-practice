@@ -9,19 +9,20 @@ type Order = {
   id: number;
   status: "ordered" | "completed";
 };
-
-let menu: Pizza[] = [
-  { id: 1, name: "Margarita", price: 8 },
-  { id: 2, name: "Pepperoni", price: 10 },
-  { id: 3, name: "Hawaiian", price: 10 },
-  { id: 4, name: "Veggie", price: 9 },
-];
-
 let cashInRegister = 100;
 const orderQueue: Order[] = [];
 let nextOrderId = 1;
+let nextPizzaId = 1;
+
+let menu: Pizza[] = [
+  { id: nextPizzaId++, name: "Margarita", price: 8 },
+  { id: nextPizzaId++, name: "Pepperoni", price: 10 },
+  { id: nextPizzaId++, name: "Hawaiian", price: 10 },
+  { id: nextPizzaId++, name: "Veggie", price: 9 },
+];
 
 function addNewPizza(pizzaObj: Pizza): void {
+    pizzaObj.id = nextPizzaId++;
   menu.push(pizzaObj);
 }
 
@@ -72,16 +73,16 @@ function getPizzaDetail(identifier: string | number): Pizza | undefined {
   }
 }
 
-addNewPizza({ id: 5, name: "Chicken Bacon Ranch", price: 12 });
-addNewPizza({ id: 6, name: "BBQ Chicken", price: 12 });
-addNewPizza({ id: 7, name: "Spicy Sausage", price: 11 });
+addNewPizza({name: "Chicken Bacon Ranch", price: 12});
+addNewPizza("BBQ Chicken", 12);
+addNewPizza("Spicy Sausage", 11);
 
 placeOrder("Chicken Bacon Ranch");
 completeOrder(1);
 
 console.log("Menu:", menu);
-console.log("Cach in register:", cashInRegister);
-console.log("Order queue:", orderQueue);
+// console.log("Cach in register:", cashInRegister);
+// console.log("Order queue:", orderQueue);
 
 // =============================== Just Practice ===================
 
@@ -120,17 +121,19 @@ function displayInfo(person: Person) {
 
 displayInfo(person1);
 
-type UserRole = "guest" | "member" | "admin";
+
 
 type User = {
+    id: number,
   username: string;
-  role: UserRole;
+  role: "guest" | "member" | "admin";
 };
 
 const users: User[] = [
-  { username: "bob-williams", role: "member" },
-  { username: "chack-norris", role: "admin" },
-  { username: "serena-williams", role: "guest" },
+  {id: 1, username: "bob-williams", role: "member" },
+  {id: 2, username: "chack-norris", role: "admin" },
+  {id: 3, username: "serena-williams", role: "guest" },
+  {id: 4, username: "charlie-brown", role: "member" },
 ];
 
 function fetchUserDetails(username: string): User {
@@ -140,6 +143,26 @@ function fetchUserDetails(username: string): User {
   }
   return user;
 }
+
+type UpdatedUser = {
+    id?: number,
+    username?: string;
+    role?: "contributor" | "member" | "admin";
+}
+
+function updateUser(id: number, updates: UpdatedUser) {
+    const userToUpdate = users.find(user => user.id === id);
+
+    if (!userToUpdate) {
+        console.error(`The user that you are looking for is not in our base`)
+        return;
+    }
+    Object.assign(userToUpdate, updates)
+}
+
+updateUser(1, {username: "new-john-doe"})
+updateUser(4, {role: "contributor"})
+
 
 // =============================== Just Practice End ===================
 
