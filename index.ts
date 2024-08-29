@@ -1,19 +1,20 @@
 type Pizza = {
+  id: number;
   name: string;
   price: number;
 };
 
 type Order = {
-    pizza: Pizza,
-    id: number,
-    status: string,
-}
+  pizza: Pizza;
+  id: number;
+  status: "ordered" | "completed";
+};
 
 let menu: Pizza[] = [
-  { name: "Margarita", price: 8 },
-  { name: "Pepperoni", price: 10 },
-  { name: "Hawaiian", price: 10 },
-  { name: "Veggie", price: 9 },
+  { id: 1, name: "Margarita", price: 8 },
+  { id: 2, name: "Pepperoni", price: 10 },
+  { id: 3, name: "Hawaiian", price: 10 },
+  { id: 4, name: "Veggie", price: 9 },
 ];
 
 let cashInRegister = 100;
@@ -27,14 +28,20 @@ function addNewPizza(pizzaObj: Pizza) {
 function placeOrder(name: string) {
   const selectedPizza = menu.find((pizzaObj) => pizzaObj.name === name);
   if (!selectedPizza || selectedPizza === undefined) {
-    console.error(`The ${name} is not on our menu. Please check if you wrote the name correctly and try one more time.`)
+    console.error(
+      `The ${name} is not on our menu. Please check if you wrote the name correctly and try one more time.`
+    );
     return;
-}
-console.log("Selected Pizza:", selectedPizza);
+  }
 
   cashInRegister += selectedPizza.price;
-  orderQueue.push({ pizza: selectedPizza, id: nextOrderId, status: "ordered" });
-  
+  const newOrder: Order = {
+    pizza: selectedPizza,
+    id: nextOrderId,
+    status: "ordered",
+  };
+  orderQueue.push(newOrder);
+
   nextOrderId += 1;
 
   return selectedPizza;
@@ -43,17 +50,31 @@ console.log("Selected Pizza:", selectedPizza);
 function completeOrder(id: number) {
   let orderIndex = orderQueue.findIndex((pizza) => pizza.id === id);
   if (orderIndex === -1) {
-    console.error(`The order that you are looking for is not in the Order Queue`);
+    console.error(
+      `The order that you are looking for is not in the Order Queue`
+    );
     return;
   }
-  orderQueue[orderIndex].status = "completed"
+  orderQueue[orderIndex].status = "completed";
 
   return orderQueue[orderIndex];
 }
 
-addNewPizza({ name: "Chicken Bacon Ranch", price: 12 });
-addNewPizza({ name: "BBQ Chicken", price: 12 });
-addNewPizza({ name: "Spicy Sausage", price: 11 });
+function getPizzaDetail(identifier: string | number) {
+  if (typeof identifier === "string") {
+    return menu.find(
+      (pizza) => pizza.name.toLowerCase() === identifier.toLowerCase()
+    );
+  } else if (typeof identifier === "number") {
+    return menu.find((pizza) => pizza.id === identifier);
+  } else {
+    throw new TypeError("Parameter must either be a string or a number")
+  }
+}
+
+addNewPizza({ id: 5, name: "Chicken Bacon Ranch", price: 12 });
+addNewPizza({ id: 6, name: "BBQ Chicken", price: 12 });
+addNewPizza({ id: 7, name: "Spicy Sausage", price: 11 });
 
 placeOrder("Chicken Bacon Ranch");
 completeOrder(1);
@@ -97,6 +118,4 @@ function displayInfo(person: Person) {
 
 displayInfo(person1);
 
-
 export {};
-
