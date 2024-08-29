@@ -22,7 +22,7 @@ let menu: Pizza[] = [
 ];
 
 function addNewPizza(pizzaObj: Pizza): void {
-    pizzaObj.id = nextPizzaId++;
+  pizzaObj.id = nextPizzaId++;
   menu.push(pizzaObj);
 }
 
@@ -73,9 +73,9 @@ function getPizzaDetail(identifier: string | number): Pizza | undefined {
   }
 }
 
-addNewPizza({name: "Chicken Bacon Ranch", price: 12});
-addNewPizza("BBQ Chicken", 12);
-addNewPizza("Spicy Sausage", 11);
+// addNewPizza({ name: "Chicken Bacon Ranch", price: 12 });
+// addNewPizza("BBQ Chicken", 12);
+// addNewPizza("Spicy Sausage", 11);
 
 placeOrder("Chicken Bacon Ranch");
 completeOrder(1);
@@ -121,20 +121,40 @@ function displayInfo(person: Person) {
 
 displayInfo(person1);
 
-
-
 type User = {
-    id: number,
+  id: number;
   username: string;
-  role: "guest" | "member" | "admin";
+  role: "contributor" | "member" | "admin";
 };
 
+let nextUserId = 1
+
 const users: User[] = [
-  {id: 1, username: "bob-williams", role: "member" },
-  {id: 2, username: "chack-norris", role: "admin" },
-  {id: 3, username: "serena-williams", role: "guest" },
-  {id: 4, username: "charlie-brown", role: "member" },
+  { id: nextUserId++, username: "bob-williams", role: "member" },
+  { id: nextUserId++, username: "chack-norris", role: "admin" },
 ];
+
+type UpdatedUser = Partial<User>;
+
+
+function updateUser(id: number, updates: UpdatedUser) {
+  const userToUpdate = users.find((user) => user.id === id);
+
+  if (!userToUpdate) {
+    console.error(`The user that you are looking for is not in our base`);
+    return;
+  }
+  Object.assign(userToUpdate, updates);
+}
+
+function addNewUser(newUser: any): User {
+const user: User = {id: nextUserId++, ...newUser}
+users.push(user);
+return user
+}
+
+addNewUser({username: "new-user", role: "member"})
+
 
 function fetchUserDetails(username: string): User {
   const user = users.find((user) => user.username === username);
@@ -144,24 +164,11 @@ function fetchUserDetails(username: string): User {
   return user;
 }
 
-type UpdatedUser = {
-    id?: number,
-    username?: string;
-    role?: "contributor" | "member" | "admin";
-}
 
-function updateUser(id: number, updates: UpdatedUser) {
-    const userToUpdate = users.find(user => user.id === id);
+updateUser(1, { username: "new-john-doe" });
+updateUser(2, { role: "contributor" });
 
-    if (!userToUpdate) {
-        console.error(`The user that you are looking for is not in our base`)
-        return;
-    }
-    Object.assign(userToUpdate, updates)
-}
-
-updateUser(1, {username: "new-john-doe"})
-updateUser(4, {role: "contributor"})
+console.log(users);
 
 
 // =============================== Just Practice End ===================
