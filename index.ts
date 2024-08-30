@@ -51,6 +51,18 @@ function placeOrder(name: string): Pizza | undefined {
   return selectedPizza;
 }
 
+function addToArray<T>(array: T[], item: T): T[] {
+    array.push(item)
+    return array
+}
+
+addToArray<Pizza>(menu, {id: nextPizzaId++, name: "Chicken Bacon Ranch", price: 12});
+addToArray<Order>(orderQueue, {id: nextOrderId++, pizza: menu[2], status: "completed"});
+
+console.log(menu);
+console.log(orderQueue);
+
+
 function completeOrder(id: number): Order | undefined {
   let orderIndex = orderQueue.findIndex((pizza) => pizza.id === id);
   if (orderIndex === -1) {
@@ -168,7 +180,27 @@ function fetchUserDetails(username: string): User {
 updateUser(1, { username: "new-john-doe" });
 updateUser(2, { role: "contributor" });
 
-console.log(users);
+// -----------------------------------------
+
+const gameScores = [14, 21, 33, 42, 59];
+const favoriteThings = [
+  "raindrops on roses",
+  "whiskers on kittens",
+  "bright copper kettles",
+  "warm woolen mittens",
+];
+const voters = [
+  { name: "Alice", age: 42 },
+  { name: "Bob", age: 77 },
+];
+
+function getLastItem<T>(array: T[]): T | undefined {
+  return array[array.length - 1];
+}
+
+console.log("Game Scores:", getLastItem(gameScores));
+console.log("Favorite Things:", getLastItem(favoriteThings));
+console.log("Voters:", getLastItem(voters));
 
 // =============================== Just Practice End ===================
 
