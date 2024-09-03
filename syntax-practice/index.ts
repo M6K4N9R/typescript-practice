@@ -185,8 +185,75 @@ type Project = {
   updatedAt: Date;
 }
 
-type DeepPartialProject = Partial<Project | Task | SubTask>
+type DeepPartial<T> = T extends object ? {
+  [Key in keyof T]?: DeepPartial<T[Key]>
+} : T;
 
-// continue later...
+type DeepPartialProject = DeepPartial<Project>
+
+function updateProject(project: Project, updates: DeepPartialProject): Project {
+  
+
+  return deepMerge(project, updates);
+}
+
+function deepMerge<T extends Record<string, any>>(target: T, source: DeepPartial<T>): T {
+  const output = { ...target };
+  if (isObject(target) && isObject(source)) {
+      Object.keys(source).forEach((key) => {
+          if (key in target) {
+              const targetValue = target[key];
+              const sourceValue = source[key as keyof DeepPartial<T>];
+              if (isObject(targetValue) && isObject(sourceValue)) {
+                  output[key] = deepMerge(targetValue, sourceValue as any);
+              } else if (sourceValue !== undefined) {
+                  (output as any)[key] = sourceValue;
+              }
+          }
+      });
+  }
+  return output;
+}
+
+function isObject(item: any): item is object {
+  return (item && typeof item === 'object' && !Array.isArray(item));
+}
+
+const project: Project = {
+  id: 1,
+  name: "Project A",
+  description: "A sample project",
+  tasks: [
+    {
+      id: 1,
+      title: "Task 1",
+      description: "First task",
+      dueDate: new Date("2023-12-31"),
+      priority: "medium",
+      subtasks: [
+        { id: 1, title: "Subtask 1", completed: false }
+      ]
+    }
+  ],
+  createdAt: new Date("2023-01-01"),
+  updatedAt: new Date("2023-01-01")
+};
+
+const updates: DeepPartialProject = {
+  name: "Updated Project A",
+  tasks: [
+    {
+      id: 1,
+      priority: "high",
+      subtasks: [
+        { id: 1, completed: true }
+      ]
+    }
+  ],
+  updatedAt: new Date()
+};
+
+const updatedProject = updateProject(project, updates);
+console.log(JSON.stringify(updatedProject, null, 2));
 
 
