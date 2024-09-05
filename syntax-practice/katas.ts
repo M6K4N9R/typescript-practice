@@ -1,11 +1,8 @@
-
-
-
 // Remove duplicates from list 8
 
 // export const distinct = (a:number[]): number[] => {
 //     const compareArray: number[] = [];
-    
+
 //     for (let i = 0; i<a.length; i++) {
 //       if(!compareArray.includes(a[i])) {
 //     compareArray.push(a[i]);
@@ -13,16 +10,14 @@
 //     }
 //       return compareArray;
 //     }
-    
+
 //     console.log(distinct([1, 2, 1, 1, 3, 2, 9, 7, 9, 5, 2, 4]));
-    
 
-    // ======= consise version
+// ======= consise version
 
-    // export const distinct = (a: number[]): number[] => {
-    //     return [...new Set(a)];
-    //   };
-
+// export const distinct = (a: number[]): number[] => {
+//     return [...new Set(a)];
+//   };
 
 //   Perplexity challenge for Set() constructor
 
@@ -37,7 +32,7 @@
 //     potentialFriendsSuggestionsSet.delete(userId)
 // }})
 // return Array.from(potentialFriendsSuggestionsSet)
-// } 
+// }
 
 // const currentFriends = [1, 2, 3, 4, 5];
 // const friendsOfFriends = [3, 4, 5, 6, 7, 8];
@@ -68,15 +63,37 @@
 
 // Alternative:
 
-function createPhoneNumber(arr: number[]): string {
-    let stringNumber = "(xxx) xxx-xxxx"
+// function createPhoneNumber(arr: number[]): string {
+//     let stringNumber = "(xxx) xxx-xxxx"
 
-    for (let i=0; i<arr.length; i++) {
-        stringNumber = stringNumber.replace("x", arr[i].toString())
+//     for (let i=0; i<arr.length; i++) {
+//         stringNumber = stringNumber.replace("x", arr[i].toString())
+//     }
+//     return stringNumber;
+// }
+
+// console.log(createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]));
+
+// Digital root
+
+// export const digitalRoot = (n: number): number => {
+//   let arr: number[] = Array.from(String(n), Number);
+//   let sum: number = 0;
+//   while (arr.length > 1) {
+//     sum = arr.reduce((a, b) => a + b);
+//     arr = Array.from(String(sum), Number);
+//   }
+
+//   return arr[0];
+// };
+
+// Alternative:
+
+export const digitalRoot = (n: number): number => {
+    while ( n >= 10) {
+        n = n.toString().split('').map(x => parseInt(x)).reduce((a,b) => a + b)
     }
-    return stringNumber;
+    return n;
 }
 
-console.log(createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]));
-
-    
+console.log(digitalRoot(655645));
