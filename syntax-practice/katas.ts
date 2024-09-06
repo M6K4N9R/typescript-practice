@@ -1,99 +1,17 @@
-// Remove duplicates from list 8
+// Your order, Please
 
-// export const distinct = (a:number[]): number[] => {
-//     const compareArray: number[] = [];
+export function order(words: string): string {
+  if (words === "") return "";
 
-//     for (let i = 0; i<a.length; i++) {
-//       if(!compareArray.includes(a[i])) {
-//     compareArray.push(a[i]);
-//       }
-//     }
-//       return compareArray;
-//     }
+  const separatedWords = words.split(" ");
 
-//     console.log(distinct([1, 2, 1, 1, 3, 2, 9, 7, 9, 5, 2, 4]));
+  const sortedWords = separatedWords.sort((a, b) => {
+    const numA = parseInt(a.match(/\d/)?.[0] || "0");
+    const numB = parseInt(b.match(/\d/)?.[0] || "0");
+    return numA - numB;
+  });
 
-// ======= consise version
-
-// export const distinct = (a: number[]): number[] => {
-//     return [...new Set(a)];
-//   };
-
-//   Perplexity challenge for Set() constructor
-
-// const getFriendSuggestions = (currentFriends: number[], friendsOfFriends: number[], coworkers: number[], excludeList: number[] = []): number[] => {
-
-// const currentFriendsSet = new Set(currentFriends);
-// const excludeSet = new Set(excludeList);
-
-// const potentialFriendsSuggestionsSet = new Set([...friendsOfFriends, ...coworkers]);
-
-// potentialFriendsSuggestionsSet.forEach((userId) => {if (currentFriendsSet.has(userId) || excludeSet.has(userId)) {
-//     potentialFriendsSuggestionsSet.delete(userId)
-// }})
-// return Array.from(potentialFriendsSuggestionsSet)
-// }
-
-// const currentFriends = [1, 2, 3, 4, 5];
-// const friendsOfFriends = [3, 4, 5, 6, 7, 8];
-// const coworkers = [5, 6, 7, 9, 10];
-// const excludeList = [8, 10];
-
-// const suggestions = getFriendSuggestions(currentFriends, friendsOfFriends, coworkers, excludeList);
-// console.log(suggestions);
-
-// Create a phone number
-
-// function createPhoneNumber(arr: number[]): string {
-//     let code: number[] = [];
-//     let firstPart: number[] = [];
-//     let secondPart: number[] = [];
-
-//     for (let i = 0; i<arr.length; i++) {
-//         if (i <= 2) {
-//             code.push(arr[i])
-//         } else if (i >= 3 && i <= 5) {
-//             firstPart.push(arr[i])
-//         } else if (i >= 6 ) {
-//             secondPart.push(arr[i])
-//         }
-//     }
-//     return `(${code.join('')}) ${firstPart.join('')}-${secondPart.join('')}`;
-// }
-
-// Alternative:
-
-// function createPhoneNumber(arr: number[]): string {
-//     let stringNumber = "(xxx) xxx-xxxx"
-
-//     for (let i=0; i<arr.length; i++) {
-//         stringNumber = stringNumber.replace("x", arr[i].toString())
-//     }
-//     return stringNumber;
-// }
-
-// console.log(createPhoneNumber([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]));
-
-// Digital root
-
-// export const digitalRoot = (n: number): number => {
-//   let arr: number[] = Array.from(String(n), Number);
-//   let sum: number = 0;
-//   while (arr.length > 1) {
-//     sum = arr.reduce((a, b) => a + b);
-//     arr = Array.from(String(sum), Number);
-//   }
-
-//   return arr[0];
-// };
-
-// Alternative:
-
-export const digitalRoot = (n: number): number => {
-    while ( n >= 10) {
-        n = n.toString().split('').map(x => parseInt(x)).reduce((a,b) => a + b)
-    }
-    return n;
+  return sortedWords.join(" ");
 }
 
-console.log(digitalRoot(655645));
+console.log(order("is9 Thi5s T3est 6a"));
