@@ -94,42 +94,78 @@
 
 // ======================================== #4
 
-export function decodedResistorValue(str: string[]): string {
-  if (str.length < 3 || str.length > 10) {
-    throw new Error("Atleast 3 or / and max 10 colors should be provided");
+// export function decodedResistorValue(str: string[]): string {
+//   if (str.length < 3 || str.length > 10) {
+//     throw new Error("Atleast 3 or / and max 10 colors should be provided");
+//   }
+// const firstTwoDigits = COLORS.indexOf(str[0]) * 10 + COLORS.indexOf(str[1])
+
+// const zeros = COLORS.indexOf(str[2]);
+// let value = firstTwoDigits * Math.pow(10, zeros)
+
+// let unit = "ohms"
+
+// if (value >= 1000000000){
+// value /= 1000000000;
+//   unit = "gigaohms"
+// } else if (value >= 1000000) {
+//   value /= 1000000;
+//   unit = "megaohms"
+// } else if (value >= 1000) {
+//   value /= 1000;
+//   unit = "kiloohms"
+// }
+
+// return `${value} ${unit}`
+// }
+
+// export const COLORS: readonly string[] = [
+//   "black",
+//   "brown",
+//   "red",
+//   "orange",
+//   "yellow",
+//   "green",
+//   "blue",
+//   "violet",
+//   "grey",
+//   "white",
+// ];
+
+// console.log( decodedResistorValue(["red", "black", "grey"]));
+
+// ======================================= # 5
+
+// export function isLeap(year: number): boolean {
+//   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+// }
+
+// ======================================= # 6
+
+export function toRna(dna: string): string {
+  console.log("Input DNA:", dna);
+  let result = dna.toUpperCase();
+  console.log("After uppercase:", result);
+
+  if (/[^GCTA]/i.test(result)) {
+    throw new Error("Invalid input DNA.");
   }
-const firstTwoDigits = COLORS.indexOf(str[0]) * 10 + COLORS.indexOf(str[1])
+  for (let i = 0; i < result.length; i++) {
+    const indexInDNAArray = DNA.indexOf(result[i]);
+    console.log(
+      "Current character: ",
+      result[i],
+      "Replacing with: ",
+      RNA[indexInDNAArray]
+    );
+    result = result.replace(result[i], RNA[indexInDNAArray]);
+    console.log("After replacement:", result);
+  }
 
-const zeros = COLORS.indexOf(str[2]);
-let value = firstTwoDigits * Math.pow(10, zeros)
-
-let unit = "ohms"
-
-if (value >= 1000000000){
-value /= 1000000000;
-  unit = "gigaohms"
-} else if (value >= 1000000) {
-  value /= 1000000;
-  unit = "megaohms"
-} else if (value >= 1000) {
-  value /= 1000;
-  unit = "kiloohms"
+  return result;
 }
 
-return `${value} ${unit}`
-}
+export const DNA = ["G", "C", "T", "A"];
+export const RNA = ["C", "G", "A", "U"];
 
-export const COLORS: readonly string[] = [
-  "black",
-  "brown",
-  "red",
-  "orange",
-  "yellow",
-  "green",
-  "blue",
-  "violet",
-  "grey",
-  "white",
-];
-
-console.log( decodedResistorValue(["red", "black", "grey"]));
+console.log(toRna("cta"));
