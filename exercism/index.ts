@@ -143,26 +143,15 @@
 // ======================================= # 6
 
 export function toRna(dna: string): string {
-  console.log("Input DNA:", dna);
+  
   let result = dna.toUpperCase();
-  console.log("After uppercase:", result);
-
+  
   if (/[^GCTA]/i.test(result)) {
     throw new Error("Invalid input DNA.");
   }
-  for (let i = 0; i < result.length; i++) {
-    const indexInDNAArray = DNA.indexOf(result[i]);
-    console.log(
-      "Current character: ",
-      result[i],
-      "Replacing with: ",
-      RNA[indexInDNAArray]
-    );
-    result = result.replace(result[i], RNA[indexInDNAArray]);
-    console.log("After replacement:", result);
-  }
 
-  return result;
+
+  return result.replace(/[GCTA]/g, char => RNA[DNA.indexOf(char)]);
 }
 
 export const DNA = ["G", "C", "T", "A"];
