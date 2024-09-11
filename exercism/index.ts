@@ -142,19 +142,51 @@
 
 // ======================================= # 6
 
-export function toRna(dna: string): string {
+// export function toRna(dna: string): string {
   
-  let result = dna.toUpperCase();
+//   let result = dna.toUpperCase();
   
-  if (/[^GCTA]/i.test(result)) {
-    throw new Error("Invalid input DNA.");
+//   if (/[^GCTA]/i.test(result)) {
+//     throw new Error("Invalid input DNA.");
+//   }
+
+
+//   return result.replace(/[GCTA]/g, char => RNA[DNA.indexOf(char)]);
+// }
+
+// export const DNA = ["G", "C", "T", "A"];
+// export const RNA = ["C", "G", "A", "U"];
+
+// console.log(toRna("cta"));
+
+
+// ======================================= # 7
+
+
+export function age(planet: string, seconds: number): string {
+  
+  const oneEarthYearInSeconds = 31557600;
+  const matchedPlanet = planets.find(p => p.name.toLowerCase() === planet.toLowerCase());
+
+  if (!matchedPlanet) {
+    throw new Error(`There is no match in our database for the name ${planet}, you have provided. Please provide an existing planet's name.`)
   }
+  const calculatedAge = seconds / (oneEarthYearInSeconds * matchedPlanet.orbitalPeriod);
+
+  const roundedAge = Math.round(calculatedAge * 100) / 100;
+
+  return `Your age on ${planet} would be ${roundedAge}`
 
 
-  return result.replace(/[GCTA]/g, char => RNA[DNA.indexOf(char)]);
 }
 
-export const DNA = ["G", "C", "T", "A"];
-export const RNA = ["C", "G", "A", "U"];
+type Planet = {
+  name: string;
+  orbitalPeriod: number;
+}
 
-console.log(toRna("cta"));
+const planets: Planet[] = [
+  {name: "Mercury", orbitalPeriod: 0.2408467}, {name: "Venus", orbitalPeriod: 0.61519726}, {name: "Earth", orbitalPeriod: 1.0}, {name: "Mars", orbitalPeriod: 1.8808158}, {name: "Jupiter", orbitalPeriod: 11.862615}, {name: "Saturn", orbitalPeriod: 29.447498}, {name: "Uranus", orbitalPeriod: 84.016846}, {name: "Neptune", orbitalPeriod: 164.79132},
+]
+
+console.log(age("Jupiter", 1000000000));
