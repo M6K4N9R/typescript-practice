@@ -163,30 +163,70 @@
 // ======================================= # 7
 
 
-export function age(planet: string, seconds: number): string {
+// export function age(planet: string, seconds: number): string {
   
-  const oneEarthYearInSeconds = 31557600;
-  const matchedPlanet = planets.find(p => p.name.toLowerCase() === planet.toLowerCase());
+//   const oneEarthYearInSeconds = 31557600;
+//   const matchedPlanet = planets.find(p => p.name.toLowerCase() === planet.toLowerCase());
 
-  if (!matchedPlanet) {
-    throw new Error(`There is no match in our database for the name ${planet}, you have provided. Please provide an existing planet's name.`)
-  }
-  const calculatedAge = seconds / (oneEarthYearInSeconds * matchedPlanet.orbitalPeriod);
+//   if (!matchedPlanet) {
+//     throw new Error(`There is no match in our database for the name ${planet}, you have provided. Please provide an existing planet's name.`)
+//   }
+//   const calculatedAge = seconds / (oneEarthYearInSeconds * matchedPlanet.orbitalPeriod);
 
-  const roundedAge = Math.round(calculatedAge * 100) / 100;
+//   const roundedAge = Math.round(calculatedAge * 100) / 100;
 
-  return `Your age on ${planet} would be ${roundedAge}`
+//   return `Your age on ${planet} would be ${roundedAge}`
 
 
-}
+// }
+
+// type Planet = {
+//   name: string;
+//   orbitalPeriod: number;
+// }
+
+// const planets: Planet[] = [
+//   {name: "Mercury", orbitalPeriod: 0.2408467}, {name: "Venus", orbitalPeriod: 0.61519726}, {name: "Earth", orbitalPeriod: 1.0}, {name: "Mars", orbitalPeriod: 1.8808158}, {name: "Jupiter", orbitalPeriod: 11.862615}, {name: "Saturn", orbitalPeriod: 29.447498}, {name: "Uranus", orbitalPeriod: 84.016846}, {name: "Neptune", orbitalPeriod: 164.79132},
+// ]
+
+// console.log(age("Jupiter", 1000000000));
+
+
+// ----------------------------- Refacture and best practices
+
+type PlanetName = "Mercury" | "Venus" | "Earth" | "Mars" | "Jupiter" | "Saturn" | "Uranus" | "Neptune";
 
 type Planet = {
-  name: string;
+  name: PlanetName;
   orbitalPeriod: number;
 }
 
-const planets: Planet[] = [
-  {name: "Mercury", orbitalPeriod: 0.2408467}, {name: "Venus", orbitalPeriod: 0.61519726}, {name: "Earth", orbitalPeriod: 1.0}, {name: "Mars", orbitalPeriod: 1.8808158}, {name: "Jupiter", orbitalPeriod: 11.862615}, {name: "Saturn", orbitalPeriod: 29.447498}, {name: "Uranus", orbitalPeriod: 84.016846}, {name: "Neptune", orbitalPeriod: 164.79132},
-]
+const planets: Record<PlanetName, number> = {
+  "Mercury": 0.2408467,
+  "Venus": 0.61519726,
+  "Earth": 1.0,
+  "Mars": 1.8808158,
+  "Jupiter": 11.862615,
+  "Saturn": 29.447498,
+  "Uranus": 84.016846,
+  "Neptune": 164.79132,
+}
 
-console.log(age("Jupiter", 1000000000));
+const EARTH_YEAR_IN_SECONDS = 31557600;
+
+export function age(planet: PlanetName, seconds: number): number {
+  const orbitalPeriod = planets[planet];
+
+  if(orbitalPeriod === undefined) {
+    throw new Error(`Invalid planet name: ${planet}` )
+  }
+
+  const calculatedAge = seconds / (EARTH_YEAR_IN_SECONDS * orbitalPeriod);
+
+  const roundedAge = Number(calculatedAge.toFixed(2));
+
+  return roundedAge;
+
+}
+
+console.log(age("Jupiter", 1000000456000));
