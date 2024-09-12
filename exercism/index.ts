@@ -233,52 +233,36 @@
 
 // ======================================= # 8
 
-function getRandomNumber(): number {
-  const initialRoll: number [] = [];
-    for (let i = 0; i < 4; i++) {
-      initialRoll.push(Math.floor(Math.random() * 5) + 1)
-    } 
-    const indexOfLowestNumber = initialRoll.indexOf(Math.min(... initialRoll));
+export class DnDCharacter {
+  public strength: number;
+  public dexterity: number;
+  public constitution: number;
+  public intelligence: number;
+  public wisdom: number;
+  public charisma: number;
+  public hitpoints: number;
 
-    const sumOfThreeHighest = initialRoll.filter((_, index) => index !== indexOfLowestNumber ).reduce((a,b) => a + b);
+  constructor() {
+    this.strength = DnDCharacter.generateAbilityScore();
+    this.dexterity = DnDCharacter.generateAbilityScore();
+    this.constitution = DnDCharacter.generateAbilityScore();
+    this.intelligence = DnDCharacter.generateAbilityScore();
+    this.wisdom = DnDCharacter.generateAbilityScore();
+    this.charisma = DnDCharacter.generateAbilityScore();
+    this.hitpoints = 10 + DnDCharacter.getModifierFor(this.constitution);
+  }
 
-    return sumOfThreeHighest;   
+  public static generateAbilityScore(): number {
+    const rolls = Array(4).fill(0).map(() => Math.floor(Math.random() * 6) + 1);
+    return rolls.sort((a, b) => b - a).slice(0, 3).reduce((sum, roll) => sum + roll, 0);
+  }
+
+  public static getModifierFor(abilityValue: number): number {
+    return Math.floor((abilityValue - 10) / 2);
+  }
 }
 
-function createRandomCharacter() {
-  
-  const characterObject = ABILITIES.reduce((obj, key) => {
-    obj[key] = getRandomNumber();
-    return obj;
-  }, {} as Record<string, number>)
-  
-  const constitutionModifier = Math.floor((characterObject.constitution - 10) / 2);
-  const hitPoints = 10 + constitutionModifier;
+const mark = new DnDCharacter();
 
-  const completeCharacter = {...characterObject, hitPoints: hitPoints, constitutionModifier: constitutionModifier}
-
-  console.log("constitutionModifier: ", constitutionModifier);
-  return completeCharacter
-  
-}
-
-
-
-const ABILITIES: readonly string[] = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
-
-// export class DnDCharacter {
-//   public static generateAbilityScore(): number {
-//     const initialRoll: number [] = [];
-//     for (let i = 0; i < 4; i++) {
-//       initialRoll.push(Math.floor(Math.random() * 5) + 1)
-//     } 
-    
-//       }
-
-//   public static getModifierFor(abilityValue: number): number {
-//     throw new Error('Remove this statement and implement this function')
-//   }
-// }
-
-console.log(createRandomCharacter());
+console.log(mark)
  
