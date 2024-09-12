@@ -194,39 +194,91 @@
 
 // ----------------------------- Refacture and best practices
 
-type PlanetName = "Mercury" | "Venus" | "Earth" | "Mars" | "Jupiter" | "Saturn" | "Uranus" | "Neptune";
+// type PlanetName = "Mercury" | "Venus" | "Earth" | "Mars" | "Jupiter" | "Saturn" | "Uranus" | "Neptune";
 
-type Planet = {
-  name: PlanetName;
-  orbitalPeriod: number;
+// type Planet = {
+//   name: PlanetName;
+//   orbitalPeriod: number;
+// }
+
+// const planets: Record<PlanetName, number> = {
+//   "Mercury": 0.2408467,
+//   "Venus": 0.61519726,
+//   "Earth": 1.0,
+//   "Mars": 1.8808158,
+//   "Jupiter": 11.862615,
+//   "Saturn": 29.447498,
+//   "Uranus": 84.016846,
+//   "Neptune": 164.79132,
+// }
+
+// const EARTH_YEAR_IN_SECONDS = 31557600;
+
+// export function age(planet: PlanetName, seconds: number): number {
+//   const orbitalPeriod = planets[planet];
+
+//   if(orbitalPeriod === undefined) {
+//     throw new Error(`Invalid planet name: ${planet}` )
+//   }
+
+//   const calculatedAge = seconds / (EARTH_YEAR_IN_SECONDS * orbitalPeriod);
+
+//   const roundedAge = Number(calculatedAge.toFixed(2));
+
+//   return roundedAge;
+
+// }
+
+// console.log(age("Jupiter", 1000000456000));
+
+// ======================================= # 8
+
+function getRandomNumber(): number {
+  const initialRoll: number [] = [];
+    for (let i = 0; i < 4; i++) {
+      initialRoll.push(Math.floor(Math.random() * 5) + 1)
+    } 
+    const indexOfLowestNumber = initialRoll.indexOf(Math.min(... initialRoll));
+
+    const sumOfThreeHighest = initialRoll.filter((_, index) => index !== indexOfLowestNumber ).reduce((a,b) => a + b);
+
+    return sumOfThreeHighest;   
 }
 
-const planets: Record<PlanetName, number> = {
-  "Mercury": 0.2408467,
-  "Venus": 0.61519726,
-  "Earth": 1.0,
-  "Mars": 1.8808158,
-  "Jupiter": 11.862615,
-  "Saturn": 29.447498,
-  "Uranus": 84.016846,
-  "Neptune": 164.79132,
+function createRandomCharacter() {
+  
+  const characterObject = ABILITIES.reduce((obj, key) => {
+    obj[key] = getRandomNumber();
+    return obj;
+  }, {} as Record<string, number>)
+  
+  const constitutionModifier = Math.floor((characterObject.constitution - 10) / 2);
+  const hitPoints = 10 + constitutionModifier;
+
+  const completeCharacter = {...characterObject, hitPoints: hitPoints, constitutionModifier: constitutionModifier}
+
+  console.log("constitutionModifier: ", constitutionModifier);
+  return completeCharacter
+  
 }
 
-const EARTH_YEAR_IN_SECONDS = 31557600;
 
-export function age(planet: PlanetName, seconds: number): number {
-  const orbitalPeriod = planets[planet];
 
-  if(orbitalPeriod === undefined) {
-    throw new Error(`Invalid planet name: ${planet}` )
-  }
+const ABILITIES: readonly string[] = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]
 
-  const calculatedAge = seconds / (EARTH_YEAR_IN_SECONDS * orbitalPeriod);
+// export class DnDCharacter {
+//   public static generateAbilityScore(): number {
+//     const initialRoll: number [] = [];
+//     for (let i = 0; i < 4; i++) {
+//       initialRoll.push(Math.floor(Math.random() * 5) + 1)
+//     } 
+    
+//       }
 
-  const roundedAge = Number(calculatedAge.toFixed(2));
+//   public static getModifierFor(abilityValue: number): number {
+//     throw new Error('Remove this statement and implement this function')
+//   }
+// }
 
-  return roundedAge;
-
-}
-
-console.log(age("Jupiter", 1000000456000));
+console.log(createRandomCharacter());
+ 
