@@ -143,13 +143,12 @@
 // ======================================= # 6
 
 // export function toRna(dna: string): string {
-  
+
 //   let result = dna.toUpperCase();
-  
+
 //   if (/[^GCTA]/i.test(result)) {
 //     throw new Error("Invalid input DNA.");
 //   }
-
 
 //   return result.replace(/[GCTA]/g, char => RNA[DNA.indexOf(char)]);
 // }
@@ -159,12 +158,10 @@
 
 // console.log(toRna("cta"));
 
-
 // ======================================= # 7
 
-
 // export function age(planet: string, seconds: number): string {
-  
+
 //   const oneEarthYearInSeconds = 31557600;
 //   const matchedPlanet = planets.find(p => p.name.toLowerCase() === planet.toLowerCase());
 
@@ -176,7 +173,6 @@
 //   const roundedAge = Math.round(calculatedAge * 100) / 100;
 
 //   return `Your age on ${planet} would be ${roundedAge}`
-
 
 // }
 
@@ -190,7 +186,6 @@
 // ]
 
 // console.log(age("Jupiter", 1000000000));
-
 
 // ----------------------------- Refacture and best practices
 
@@ -265,30 +260,92 @@
 // const mark = new DnDCharacter();
 
 // console.log(mark)
- 
 
 // ======================== Independant Class practice
 
-export class Book {
+// export class Book {
 
-    constructor( 
-    public title: string,
-    public author: string,
-    public pages: number) {}
+//     constructor(
+//     public title: string,
+//     public author: string,
+//     public pages: number) {}
 
-  getSummary(): string {
-    return `The book "${this.title}" is written by ${this.author}, and has ${this.pages} pages.`;
+//   getSummary(): string {
+//     return `The book "${this.title}" is written by ${this.author}, and has ${this.pages} pages.`;
+//   }
+
+//   static comparePages(book1: Book, book2: Book): Book {
+//     return book1.pages > book2.pages ? book1 : book2;
+//   }
+// }
+
+// const book1 = new Book("Wealth", "Richard Brandon", 234);
+// const book2 = new Book("Mono", "Konyo", 145);
+
+// console.log(book1.getSummary());
+// console.log(Book.comparePages(book1, book2).title);
+
+// ===========================================
+
+class BankAccount {
+  constructor(
+    public accountNumber: string,
+    public accountHolder: string,
+    public balance: number = 0
+  ) {}
+
+  deposit(amount: number) {
+    if (amount <= 0) {
+      throw new Error(
+        "Invalid Amount. Please make sure that it is a positive number"
+      );
+    }
+    return (this.balance += amount);
   }
 
-  static comparePages(book1: Book, book2: Book): Book {
-    return book1.pages > book2.pages ? book1 : book2;
+  withdraw(amount: number) {
+    if (amount <= 0) {
+      throw new Error(
+        "Invalid Amount. Please make sure that it is a positive number"
+      );
+    } else if (this.balance < amount) {
+      throw new Error(
+        "There is not enough money on your account to withdraw the requested amount"
+      );
+    }
+     this.balance -= amount;
+     return this.balance
+  }
+
+  getBalance(): number {
+    return this.balance;
+  }
+
+  getAccountInfo(): string {
+    return `Account number: ${this.accountNumber}\nHolders's Name: ${this.accountHolder}\nBalance: ${this.balance}`;
+  }
+
+  static transferMoney(
+    fromAccount: BankAccount,
+    toAccount: BankAccount,
+    amount: number
+  ): string {
+    if (fromAccount.balance < amount) {
+      throw new Error(
+        "There is not enough funds on sender's account to make the transfer"
+      );
+    }
+    fromAccount.withdraw(amount);
+    toAccount.deposit(amount);
+    return `Transferred ${amount} from account ${fromAccount.accountNumber} to account ${toAccount.accountNumber}`;
   }
 }
 
-const book1 = new Book("Wealth", "Richard Brandon", 234);
-const book2 = new Book("Mono", "Konyo", 145);
+const myAccount = new BankAccount("033476998357", "Boby", 670)
+const yourAccount = new BankAccount("03345878998357", "Mary", 1650)
 
-
-console.log(book1.getSummary());
-console.log(Book.comparePages(book1, book2).title);
-
+console.log(myAccount.getBalance());
+console.log(yourAccount.getAccountInfo());
+console.log(BankAccount.transferMoney(myAccount, yourAccount, 470));
+console.log(myAccount.getBalance());
+console.log(yourAccount.getAccountInfo());
