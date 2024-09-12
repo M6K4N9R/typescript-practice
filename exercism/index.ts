@@ -270,21 +270,17 @@
 // ======================== Independant Class practice
 
 export class Book {
-  public title: string;
-  public author: string;
-  public pages: number;
 
-  constructor(title: string, author: string, pages: number) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
+    constructor( 
+    public title: string,
+    public author: string,
+    public pages: number) {}
+
+  getSummary(): string {
+    return `The book "${this.title}" is written by ${this.author}, and has ${this.pages} pages.`;
   }
 
-  static getSummary(book: Book): string {
-    return `The book ${book.title} is written by ${book.author}, and has ${book.pages} pages.`
-  }
-
-  static comparePages(book1: Book, book2: Book) {
+  static comparePages(book1: Book, book2: Book): Book {
     return book1.pages > book2.pages ? book1 : book2;
   }
 }
@@ -293,6 +289,6 @@ const book1 = new Book("Wealth", "Richard Brandon", 234);
 const book2 = new Book("Mono", "Konyo", 145);
 
 
-console.log(Book.getSummary(book2));
-console.log(Book.comparePages(book1, book2));
+console.log(book1.getSummary());
+console.log(Book.comparePages(book1, book2).title);
 
