@@ -287,65 +287,21 @@
 
 // ===========================================
 
-class BankAccount {
-  constructor(
-    public accountNumber: string,
-    public accountHolder: string,
-    public balance: number = 0
-  ) {}
 
-  deposit(amount: number) {
-    if (amount <= 0) {
-      throw new Error(
-        "Invalid Amount. Please make sure that it is a positive number"
-      );
-    }
-    return (this.balance += amount);
-  }
+// ====================================== #9
 
-  withdraw(amount: number) {
-    if (amount <= 0) {
-      throw new Error(
-        "Invalid Amount. Please make sure that it is a positive number"
-      );
-    } else if (this.balance < amount) {
-      throw new Error(
-        "There is not enough money on your account to withdraw the requested amount"
-      );
-    }
-     this.balance -= amount;
-     return this.balance
-  }
+export function score(x: number, y: number): number {
+  
+  const throwDistance = Math.sqrt(x * x + y * y);
 
-  getBalance(): number {
-    return this.balance;
+  if (throwDistance < 1) {
+    return 10;
+    if (throwDistance < 5) {
+    return 5;
+      if (throwDistance < 10) {
+    return 1;
+  } else {return 0};
+ 
   }
-
-  getAccountInfo(): string {
-    return `Account number: ${this.accountNumber}\nHolders's Name: ${this.accountHolder}\nBalance: ${this.balance}`;
-  }
-
-  static transferMoney(
-    fromAccount: BankAccount,
-    toAccount: BankAccount,
-    amount: number
-  ): string {
-    if (fromAccount.balance < amount) {
-      throw new Error(
-        "There is not enough funds on sender's account to make the transfer"
-      );
-    }
-    fromAccount.withdraw(amount);
-    toAccount.deposit(amount);
-    return `Transferred ${amount} from account ${fromAccount.accountNumber} to account ${toAccount.accountNumber}`;
-  }
+  
 }
-
-const myAccount = new BankAccount("033476998357", "Boby", 670)
-const yourAccount = new BankAccount("03345878998357", "Mary", 1650)
-
-console.log(myAccount.getBalance());
-console.log(yourAccount.getAccountInfo());
-console.log(BankAccount.transferMoney(myAccount, yourAccount, 470));
-console.log(myAccount.getBalance());
-console.log(yourAccount.getAccountInfo());
