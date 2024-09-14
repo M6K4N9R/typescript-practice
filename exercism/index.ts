@@ -293,7 +293,6 @@
 //   const throwDistance = Math.sqrt(x * x + y * y);
 
 //   console.log("throwDistance", throwDistance);
-  
 
 //   if (throwDistance <= 1) {
 //     return 10;
@@ -310,7 +309,6 @@
 
 // console.log(score(0, 10));
 
-
 // ================================== 10 Pangram easy
 
 // export function isPangram(str: string): boolean {
@@ -321,10 +319,8 @@
 // ------------------ or Alternative
 
 export function isPangram(str: string): boolean {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const lowerCase = alphabet.toLowerCase();
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  const lowerCaseStr = str.toLowerCase();
 
-  return str.split('').every((letter) => letter.includes(lowerCase))
+  return alphabet.split("").every((letter) => lowerCaseStr.includes(letter));
 }
-
-console.log("khsdugy");
