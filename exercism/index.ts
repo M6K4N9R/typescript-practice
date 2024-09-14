@@ -318,9 +318,48 @@
 
 // ------------------ or Alternative
 
-export function isPangram(str: string): boolean {
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
-  const lowerCaseStr = str.toLowerCase();
+// export function isPangram(str: string): boolean {
+//   const alphabet = "abcdefghijklmnopqrstuvwxyz";
+//   const lowerCaseStr = str.toLowerCase();
 
-  return alphabet.split("").every((letter) => lowerCaseStr.includes(letter));
-}
+//   return alphabet.split("").every((letter) => lowerCaseStr.includes(letter));
+// }
+
+// ================================= 10
+
+// export function hey(message: string): string {
+//   const trimmedMessage = message.trim();
+
+//   const isEmpty = trimmedMessage.length === 0;
+
+//   const isQuestion = trimmedMessage.endsWith("?");
+
+//   const isYelling =
+//     trimmedMessage === trimmedMessage.toUpperCase() &&
+//     /[A-Z]/.test(trimmedMessage);
+
+//   const isCapitalised = /^[A-Z0-9\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/.test(
+//     message
+//   );
+//   const isBoth = isQuestion && isCapitalised;
+
+//   if (isEmpty) {
+//     return "Fine. Be that way!";
+//   }
+
+//   if (isYelling && isQuestion) {
+//     return "Calm down, I know what I'm doing!";
+//   }
+
+//   if (isYelling) {
+//     return "Whoa, chill out!";
+//   }
+
+//   if (isQuestion) {
+//     return "Sure.";
+//   }
+
+//   return "Whatever.";
+// }
+
+// ===== FINISH EASY. START MEDIUM =================================
