@@ -287,21 +287,44 @@
 
 // ===========================================
 
-
 // ====================================== #9
 
-export function score(x: number, y: number): number {
-  
-  const throwDistance = Math.sqrt(x * x + y * y);
+// export function score(x: number, y: number): number {
+//   const throwDistance = Math.sqrt(x * x + y * y);
 
-  if (throwDistance < 1) {
-    return 10;
-    if (throwDistance < 5) {
-    return 5;
-      if (throwDistance < 10) {
-    return 1;
-  } else {return 0};
- 
-  }
+//   console.log("throwDistance", throwDistance);
   
+
+//   if (throwDistance <= 1) {
+//     return 10;
+//   }
+//   if (throwDistance <= 5) {
+//     return 5;
+//   }
+//   if (throwDistance <= 10) {
+//     return 1;
+//   } else {
+//     return 0;
+//   }
+// }
+
+// console.log(score(0, 10));
+
+
+// ================================== 10 Pangram easy
+
+// export function isPangram(str: string): boolean {
+//   const regex = /^(?=.*a)(?=.*b)(?=.*c)(?=.*d)(?=.*e)(?=.*f)(?=.*g)(?=.*h)(?=.*i)(?=.*j)(?=.*k)(?=.*l)(?=.*m)(?=.*n)(?=.*o)(?=.*p)(?=.*q)(?=.*r)(?=.*s)(?=.*t)(?=.*u)(?=.*v)(?=.*w)(?=.*x)(?=.*y)(?=.*z).*$/i;
+//   return regex.test(str);
+// }
+
+// ------------------ or Alternative
+
+export function isPangram(str: string): boolean {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  const lowerCase = alphabet.toLowerCase();
+
+  return str.split('').every((letter) => letter.includes(lowerCase))
 }
+
+console.log("khsdugy");
