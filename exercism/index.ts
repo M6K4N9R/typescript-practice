@@ -363,3 +363,81 @@
 // }
 
 // ===== FINISH EASY. START MEDIUM =================================
+
+// Another Class Practice
+
+class Book {
+  constructor(
+    public title: string,
+    public author: string,
+    public ISBN: string,
+    public isAvailable = true
+  ) {}
+
+  public markAsUnavailable(): void {
+    this.isAvailable = false;
+  }
+
+  public markAsAvailable(): void {
+    this.isAvailable = true;
+  }
+
+  public getBookInfo(): string {
+    return `The book "${this.title}" is written by ${this.author} and has ${this.ISBN} ISBN number.`;
+  }
+}
+
+class Library {
+  public name: string;
+  public books: Book[];
+
+  constructor(name: string) {
+    
+  }
+
+  addBook(book: Book): void {
+    [...this.books, book];
+  }
+
+  removeBook(ISBN: string): void {
+    const bookToRemove = this.books.find((book) => book.ISBN === ISBN);
+    if (bookToRemove) {
+      this.books.splice(this.books.indexOf(bookToRemove));
+    } else {
+      throw new Error(`The requested book is not in the ${this.name} Library`);
+    }
+  }
+
+  findBook(ISBN: string): Book | undefined {
+    return this.books.find((book) => book.ISBN === ISBN);
+  }
+
+  checkoutBook(ISBN: string): boolean {
+    const foundBook = this.books.find((book) => book.ISBN === ISBN);
+    if (foundBook) {
+        markAsUnavailable(foundBook.title);
+        return true
+    } else {
+        return false
+    }
+  }
+
+  returnBook(ISBN: string): boolean {
+    const foundBook = this.books.find((book) => book.ISBN === ISBN);
+    if (foundBook) {
+        markAsAvailable(foundBook.title);
+        return true
+    } else {
+        return false
+    }
+  }
+
+  getAvailableBooks(): Book[] {
+    const availableBooks = this.books.map((book) => book.isAvailable === true);
+    return availableBooks;
+  }
+
+  getTotalBooks(): number {
+    return this.books.length;
+  }
+}
