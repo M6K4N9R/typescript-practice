@@ -366,75 +366,98 @@
 
 // Another Class Practice
 
-class Book {
-  constructor(
-    public title: string,
-    public author: string,
-    public ISBN: string,
-    public isAvailable = true
-  ) {}
+// class Book {
+//   constructor(
+//     public title: string,
+//     public author: string,
+//     public ISBN: string,
+//     public isAvailable = true
+//   ) {}
 
-  public markAsUnavailable(): void {
-    this.isAvailable = false;
-  }
+//   public markAsUnavailable(): void {
+//     this.isAvailable = false;
+//   }
 
-  public markAsAvailable(): void {
-    this.isAvailable = true;
-  }
+//   public markAsAvailable(): void {
+//     this.isAvailable = true;
+//   }
 
-  public getBookInfo(): string {
-    return `The book "${this.title}" is written by ${this.author} and has ISBN ${this.ISBN}.`;
-  }
-}
+//   public getBookInfo(): string {
+//     return `The book "${this.title}" is written by ${this.author} and has ISBN ${this.ISBN}.`;
+//   }
+// }
 
-class Library {
+// class Library {
   
-  public books: Book[];
+//   public books: Book[];
 
-  constructor(public name: string) {
-    this.books = []
+//   constructor(public name: string) {
+//     this.books = []
+//   }
+
+//   addBook(book: Book): void {
+//     this.books.push(book);
+//   }
+
+//   removeBook(ISBN: string): void {
+//     const index = this.books.findIndex((book) => book.ISBN === ISBN);
+//     if (index !== -1) {
+//       this.books.splice(index, 1);
+//     } else {
+//       throw new Error(`The requested book is not in the ${this.name} Library`);
+//     }
+//   }
+
+//   findBook(ISBN: string): Book | undefined {
+//     return this.books.find((book) => book.ISBN === ISBN);
+//   }
+
+//   checkoutBook(ISBN: string): boolean {
+//     const foundBook = this.findBook(ISBN);
+//     if (foundBook && foundBook.isAvailable) {
+//         foundBook.markAsUnavailable();
+//         return true
+//     }
+//         return false
+//   }
+
+//   returnBook(ISBN: string): boolean {
+//     const foundBook = this.findBook(ISBN);
+//     if (foundBook && foundBook.isAvailable) {
+//         foundBook.markAsAvailable();
+//         return true
+//     }
+//         return false
+//   }
+
+//   getAvailableBooks(): Book[] {
+//     return this.books.filter((book) => book.isAvailable);
+//   }
+
+//   getTotalBooks(): number {
+//     return this.books.length;
+//   }
+// }
+
+// =============================== # Matrix
+
+export class Matrix {
+  private numbers: string;
+  private _rows: number[][];
+
+  constructor(matrix: string) {
+    this.numbers = matrix;
+    this._rows = [];
   }
-
-  addBook(book: Book): void {
-    this.books.push(book);
-  }
-
-  removeBook(ISBN: string): void {
-    const index = this.books.findIndex((book) => book.ISBN === ISBN);
-    if (index !== -1) {
-      this.books.splice(index, 1);
-    } else {
-      throw new Error(`The requested book is not in the ${this.name} Library`);
+  public get rows(): number[][] {
+    if (this._rows.length === 0) {
+      this._rows = this.numbers.split('\n').map(row => row.split(' ').map( number => parseInt(number, 10)) )
     }
-  }
-
-  findBook(ISBN: string): Book | undefined {
-    return this.books.find((book) => book.ISBN === ISBN);
-  }
-
-  checkoutBook(ISBN: string): boolean {
-    const foundBook = this.findBook(ISBN);
-    if (foundBook && foundBook.isAvailable) {
-        foundBook.markAsUnavailable();
-        return true
-    }
-        return false
-  }
-
-  returnBook(ISBN: string): boolean {
-    const foundBook = this.findBook(ISBN);
-    if (foundBook && foundBook.isAvailable) {
-        foundBook.markAsAvailable();
-        return true
-    }
-        return false
-  }
-
-  getAvailableBooks(): Book[] {
-    return this.books.filter((book) => book.isAvailable);
-  }
-
-  getTotalBooks(): number {
-    return this.books.length;
+    return this._rows
   }
 }
+
+const matrix1 = new Matrix('1')
+
+console.log(matrix1.rows)
+
