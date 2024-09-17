@@ -383,26 +383,26 @@ class Book {
   }
 
   public getBookInfo(): string {
-    return `The book "${this.title}" is written by ${this.author} and has ${this.ISBN} ISBN number.`;
+    return `The book "${this.title}" is written by ${this.author} and has ISBN ${this.ISBN}.`;
   }
 }
 
 class Library {
-  public name: string;
+  
   public books: Book[];
 
-  constructor(name: string) {
-    
+  constructor(public name: string) {
+    this.books = []
   }
 
   addBook(book: Book): void {
-    [...this.books, book];
+    this.books.push(book);
   }
 
   removeBook(ISBN: string): void {
-    const bookToRemove = this.books.find((book) => book.ISBN === ISBN);
-    if (bookToRemove) {
-      this.books.splice(this.books.indexOf(bookToRemove));
+    const index = this.books.findIndex((book) => book.ISBN === ISBN);
+    if (index !== -1) {
+      this.books.splice(index, 1);
     } else {
       throw new Error(`The requested book is not in the ${this.name} Library`);
     }
@@ -413,28 +413,25 @@ class Library {
   }
 
   checkoutBook(ISBN: string): boolean {
-    const foundBook = this.books.find((book) => book.ISBN === ISBN);
-    if (foundBook) {
-        markAsUnavailable(foundBook.title);
+    const foundBook = this.findBook(ISBN);
+    if (foundBook && foundBook.isAvailable) {
+        foundBook.markAsUnavailable();
         return true
-    } else {
-        return false
     }
+        return false
   }
 
   returnBook(ISBN: string): boolean {
-    const foundBook = this.books.find((book) => book.ISBN === ISBN);
-    if (foundBook) {
-        markAsAvailable(foundBook.title);
+    const foundBook = this.findBook(ISBN);
+    if (foundBook && foundBook.isAvailable) {
+        foundBook.markAsAvailable();
         return true
-    } else {
-        return false
     }
+        return false
   }
 
   getAvailableBooks(): Book[] {
-    const availableBooks = this.books.map((book) => book.isAvailable === true);
-    return availableBooks;
+    return this.books.filter((book) => book.isAvailable);
   }
 
   getTotalBooks(): number {
