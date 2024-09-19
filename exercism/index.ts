@@ -444,10 +444,12 @@
 export class Matrix {
   private numbers: string;
   private _rows: number[][];
+  private _columns: number[][];
 
-  constructor(matrix: string) {
-    this.numbers = matrix;
+  constructor(input: string) {
+    this.numbers = input;
     this._rows = [];
+    this._columns = [];
   }
   public get rows(): number[][] {
     if (this._rows.length === 0) {
@@ -455,9 +457,22 @@ export class Matrix {
     }
     return this._rows
   }
+
+  public get columns(): number[][] {
+    if (this._columns.length === 0) {
+      const rows = this._rows
+      const ColumnCount = rows.length
+
+      for (let i = 0; i < ColumnCount; i++) {
+        this._columns[i] = rows.map(row => row[i])
+      }
+    }
+    return this._columns
+}
+
 }
 
 const matrix1 = new Matrix('1')
+console.log(matrix1.columns)
 
-console.log(matrix1.rows)
 
