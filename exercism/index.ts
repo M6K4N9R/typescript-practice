@@ -452,6 +452,7 @@ export class Matrix {
     this._columns = [];
   }
   public get rows(): number[][] {
+
     if (this._rows.length === 0) {
       this._rows = this.numbers.split('\n').map(row => row.split(' ').map( number => parseInt(number, 10)) )
     }
@@ -460,8 +461,11 @@ export class Matrix {
 
   public get columns(): number[][] {
     if (this._columns.length === 0) {
-      const rows = this._rows
-      const ColumnCount = rows.length
+      const rows = this.rows
+      if (rows.length === 0) {
+        return []
+      }
+      const ColumnCount = rows[0].length
 
       for (let i = 0; i < ColumnCount; i++) {
         this._columns[i] = rows.map(row => row[i])
@@ -475,4 +479,10 @@ export class Matrix {
 const matrix1 = new Matrix('1')
 console.log(matrix1.columns)
 
+
+const input = "1 2";
+
+const res = input.split(' ').map(number => parseInt(number, 10))
+
+console.log(res);
 
