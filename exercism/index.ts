@@ -480,33 +480,38 @@
 // console.log(matrix1.rows)
 // console.log(matrix1.columns)
 
-// ==== Just a quick practice.
+// =============================== # Robot
 
-import React from 'react';
-type Item = {
-  name: string,
-  id: number,
-  description: string
-}
+export class Robot {
+  robotName: string;
+  // private _allNames: string[];
+  private _id: number;
+  
 
-type ListProps = {
-strings: Item[]
-}
-
-export default function List({strings}: ListProps): JSX.Element {
-  if (strings.length === 0) {
-    return <p>No items to display.</p>
+  constructor() {
+    this._id = NUMBER_OF_ROBOTS
+    NUMBER_OF_ROBOTS++
+    this.robotName = this.name
   }
-  return (
-      <ul>
-      {strings.map((item) => (
-        <li  key={item.id}>
-        <h2>{item.name}</h2>
-        <p>{item.description}</p>
-        </li>
-      ))}
-       
-      </ul>
-    );
-   
+
+  public get name(): string {
+    const letters = Array.from({ length: 2 }, () => 
+      String.fromCharCode(65 + Math.floor(Math.random() * 26))
+    ).join('');
+
+    const digits = Array.from({ length: 3 }, () => 
+      Math.floor(Math.random() * 10).toString()
+    ).join('');
+
+    return letters + digits;
+  }
 }
+
+let NUMBER_OF_ROBOTS = 1;
+
+const robot1 = new Robot()
+const robot2 = new Robot()
+
+console.log(robot1);
+
+// continue later....
