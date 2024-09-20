@@ -388,7 +388,7 @@
 // }
 
 // class Library {
-  
+
 //   public books: Book[];
 
 //   constructor(public name: string) {
@@ -486,22 +486,21 @@ export class Robot {
   robotName: string;
   // private _allNames: string[];
   private _id: number;
-  
 
   constructor() {
-    this._id = NUMBER_OF_ROBOTS
-    NUMBER_OF_ROBOTS++
-    this.robotName = this.name
+    this._id = NUMBER_OF_ROBOTS;
+    NUMBER_OF_ROBOTS++;
+    this.robotName = this.name;
   }
 
   public get name(): string {
-    const letters = Array.from({ length: 2 }, () => 
+    const letters = Array.from({ length: 2 }, () =>
       String.fromCharCode(65 + Math.floor(Math.random() * 26))
-    ).join('');
+    ).join("");
 
-    const digits = Array.from({ length: 3 }, () => 
+    const digits = Array.from({ length: 3 }, () =>
       Math.floor(Math.random() * 10).toString()
-    ).join('');
+    ).join("");
 
     return letters + digits;
   }
@@ -509,9 +508,35 @@ export class Robot {
 
 let NUMBER_OF_ROBOTS = 1;
 
-const robot1 = new Robot()
-const robot2 = new Robot()
+const robot1 = new Robot();
+const robot2 = new Robot();
 
 console.log(robot1);
 
 // continue later....
+
+export default function sum(number1: number, number2: number): number {
+  return number1 + number2;
+}
+
+interface Person {
+  name: string;
+  age: number;
+  email: string;
+}
+
+export function greet(obj: Person): string {
+  return `Hello, ${obj.name}! You are ${obj.age} years old.`;
+}
+
+function filterArray<T>(arr: T[], predicate: (item: T) => boolean): T[] {
+  return arr.filter(predicate)
+}
+
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const evenNumbers = filterArray(numbers, (num) => num % 2 === 1);
+console.log(evenNumbers);
+
+const words = ["apple", "banana", "cherry", "date", "elderberry"];
+const longWords = filterArray(words, (word) => word.length > 7);
+console.log(longWords);
