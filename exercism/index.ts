@@ -441,48 +441,72 @@
 
 // =============================== # Matrix
 
-export class Matrix {
-  private numbers: string;
-  private _rows: number[][];
-  private _columns: number[][];
+// export class Matrix {
+//   private numbers: string;
+//   private _rows: number[][];
+//   private _columns: number[][];
 
-  constructor(input: string) {
-    this.numbers = input;
-    this._rows = [];
-    this._columns = [];
-  }
-  public get rows(): number[][] {
+//   constructor(input: string) {
+//     this.numbers = input;
+//     this._rows = [];
+//     this._columns = [];
+//   }
+//   public get rows(): number[][] {
 
-    if (this._rows.length === 0) {
-      this._rows = this.numbers.split('\n').map(row => row.split(' ').map( number => parseInt(number, 10)) )
-    }
-    return this._rows
-  }
+//     if (this._rows.length === 0) {
+//       this._rows = this.numbers.split('\n').map(row => row.split(' ').map( number => parseInt(number, 10)) )
+//     }
+//     return this._rows
+//   }
 
-  public get columns(): number[][] {
-    if (this._columns.length === 0) {
-      const rows = this.rows
-      if (rows.length === 0) {
-        return []
-      }
-      const ColumnCount = rows[0].length
+//   public get columns(): number[][] {
+//     if (this._columns.length === 0) {
+//       const rows = this.rows
+//       if (rows.length === 0) {
+//         return []
+//       }
+//       const ColumnCount = rows[0].length
 
-      for (let i = 0; i < ColumnCount; i++) {
-        this._columns[i] = rows.map(row => row[i])
-      }
-    }
-    return this._columns
+//       for (let i = 0; i < ColumnCount; i++) {
+//         this._columns[i] = rows.map(row => row[i])
+//       }
+//     }
+//     return this._columns
+// }
+
+// }
+
+// const matrix1 = new Matrix('1 2 3\n4 5 6')
+// console.log(matrix1.rows)
+// console.log(matrix1.columns)
+
+// ==== Just a quick practice.
+
+import React from 'react';
+type Item = {
+  name: string,
+  id: number,
+  description: string
 }
 
+type ListProps = {
+strings: Item[]
 }
 
-const matrix1 = new Matrix('1')
-console.log(matrix1.columns)
-
-
-const input = "1 2";
-
-const res = input.split(' ').map(number => parseInt(number, 10))
-
-console.log(res);
-
+export default function List({strings}: ListProps): JSX.Element {
+  if (strings.length === 0) {
+    return <p>No items to display.</p>
+  }
+  return (
+      <ul>
+      {strings.map((item) => (
+        <li  key={item.id}>
+        <h2>{item.name}</h2>
+        <p>{item.description}</p>
+        </li>
+      ))}
+       
+      </ul>
+    );
+   
+}
