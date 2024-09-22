@@ -483,7 +483,7 @@
 // =============================== # Robot
 
 export class Robot {
-  private static allNames: string[] = [];
+  private static usedNames: Set<string> = new Set();
   private _name: string;
 
 
@@ -492,22 +492,23 @@ export class Robot {
   }
 
   public get name(): string {
-    return this._name
+    return this._name;
   }
 
-  public reset(): void {
-    Robot.allNames = Robot.allNames.filter(name => name !== this._name)
+  public resetName(): void {
+    Robot.usedNames.delete(this._name)
     this._name = this.generateUniqueName()
   }
 
   
   private generateUniqueName(): string {
+
 let newName: string;
 do {
   newName = this.generateRandomName();
-} while (Robot.allNames.includes(newName));
+} while (Robot.usedNames.has(newName));
 
-Robot.allNames.push(newName);
+Robot.usedNames.add(newName);
 return newName;
   }
 
@@ -522,14 +523,20 @@ return newName;
 
     return letters + digits;
   }
+  public static releaseNames(): void {
+  Robot.usedNames.clear();
+  }
 
 }
 
 
 
 const robot1 = new Robot();
-const robot2 = new Robot();
+console.log("Robot created");
+console.log(`Robot name: ${robot1.name}`);
+console.log(`Robot name again: ${robot1.name}`);
+
 
 console.log(robot1);
-console.log(robot2);
+
 
