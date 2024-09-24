@@ -482,104 +482,104 @@
 
 // =============================== # Robot
 
-// export class Robot {
-//   private static usedNames: Set<string> = new Set();
-//   private _name: string;
+export class Robot {
+  private static usedNames: Set<string> = new Set();
+  private _name: string;
 
 
-//   constructor() {
-//     this._name = this.generateUniqueName();
-//   }
+  constructor() {
+    this._name = this.generateUniqueName();
+  }
 
-//   public get name(): string {
-//     return this._name;
-//   }
+  public get name(): string {
+    return this._name;
+  }
 
-//   public resetName(): void {
-//     Robot.usedNames.delete(this._name)
-//     this._name = this.generateUniqueName()
-//   }
+  public resetName(): void {
+    Robot.usedNames.delete(this._name)
+    this._name = this.generateUniqueName()
+  }
 
   
-//   private generateUniqueName(): string {
+  private generateUniqueName(): string {
 
-// let newName: string;
+let newName: string;
+do {
+  newName = this.generateRandomName();
+} while (Robot.usedNames.has(newName));
+
+Robot.usedNames.add(newName);
+return newName;
+  }
+
+  private generateRandomName() {
+    const letters = Array.from({ length: 4 }, () =>
+      String.fromCharCode(65 + Math.floor(Math.random() * 26))
+    ).join("");
+
+    const digits = Array.from({ length: 5 }, () =>
+      Math.floor(Math.random() * 10).toString()
+    ).join("");
+
+    return letters[0] + letters[3] + digits.slice(2);
+  }
+  public static releaseNames(): void {
+  Robot.usedNames.clear();
+  }
+
+}
+
+
+
+const robot1 = new Robot();
+console.log("Robot created");
+console.log(`Robot name: ${robot1.name}`);
+console.log(`Robot name again: ${robot1.name}`);
+
+
+console.log(robot1);
+
+// export class UniqueIdGenerator {
+//   private static userIds: Set<string> = new Set()
+// private name: string;
+
+// constructor() {}
+
+// public generateId(): string {
+//   return this.generateUniqueId()
+// }
+
+// private generateRandomId(): string {
+//   const letters = Array.from({ length: 3 }, () =>
+//           String.fromCharCode(65 + Math.floor(Math.random() * 26))
+//         ).join("");
+    
+//         const digits = Array.from({ length: 4 }, () =>
+//           Math.floor(Math.random() * 10).toString()
+//         ).join("");
+    
+//         return letters + digits;
+// }
+
+// private generateUniqueId(): string {
+//   let newId: string;
 // do {
-//   newName = this.generateRandomName();
-// } while (Robot.usedNames.has(newName));
+//   newId = this.generateRandomId()}
+// while (UniqueIdGenerator.userIds.has(newId))
 
-// Robot.usedNames.add(newName);
-// return newName;
-//   }
-
-//   private generateRandomName() {
-//     const letters = Array.from({ length: 2 }, () =>
-//       String.fromCharCode(65 + Math.floor(Math.random() * 26))
-//     ).join("");
-
-//     const digits = Array.from({ length: 3 }, () =>
-//       Math.floor(Math.random() * 10).toString()
-//     ).join("");
-
-//     return letters + digits;
-//   }
-//   public static releaseNames(): void {
-//   Robot.usedNames.clear();
-//   }
-
+//   UniqueIdGenerator.userIds.add(newId)
+//   return newId;
 // }
 
 
-
-// const robot1 = new Robot();
-// console.log("Robot created");
-// console.log(`Robot name: ${robot1.name}`);
-// console.log(`Robot name again: ${robot1.name}`);
-
-
-// console.log(robot1);
-
-export class UniqueIdGenerator {
-  private static userIds: Set<string> = new Set()
-private name: string;
-
-constructor() {}
-
-public generateId(): string {
-  return this.generateUniqueId()
-}
-
-private generateRandomId(): string {
-  const letters = Array.from({ length: 3 }, () =>
-          String.fromCharCode(65 + Math.floor(Math.random() * 26))
-        ).join("");
-    
-        const digits = Array.from({ length: 4 }, () =>
-          Math.floor(Math.random() * 10).toString()
-        ).join("");
-    
-        return letters + digits;
-}
-
-private generateUniqueId(): string {
-  let newId: string;
-do {
-  newId = this.generateRandomId()}
-while (UniqueIdGenerator.userIds.has(newId))
-
-  UniqueIdGenerator.userIds.add(newId)
-  return newId;
-}
-
-
-public releaseId(id: string): void {
-  UniqueIdGenerator.userIds.delete(id)
+// public releaseId(id: string): void {
+//   UniqueIdGenerator.userIds.delete(id)
   
-}
+// }
 
-public static resetAll(): void {
-  UniqueIdGenerator.userIds.clear()
+// public static resetAll(): void {
+//   UniqueIdGenerator.userIds.clear()
 
-}
+// }
 
-}
+// }
