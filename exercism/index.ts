@@ -483,7 +483,7 @@
 // =============================== # Robot
 
 export class Robot {
-  private static usedNames: Set<string> = new Set();
+  private static availableNames: [] = [];
   private _name: string;
 
 
@@ -496,7 +496,7 @@ export class Robot {
   }
 
   public resetName(): void {
-    Robot.usedNames.delete(this._name)
+    Robot.availableNames.pop(this._name)
     this._name = this.generateUniqueName()
   }
 
@@ -539,47 +539,5 @@ console.log(`Robot name again: ${robot1.name}`);
 
 console.log(robot1);
 
-// export class UniqueIdGenerator {
-//   private static userIds: Set<string> = new Set()
-// private name: string;
-
-// constructor() {}
-
-// public generateId(): string {
-//   return this.generateUniqueId()
-// }
-
-// private generateRandomId(): string {
-//   const letters = Array.from({ length: 3 }, () =>
-//           String.fromCharCode(65 + Math.floor(Math.random() * 26))
-//         ).join("");
-    
-//         const digits = Array.from({ length: 4 }, () =>
-//           Math.floor(Math.random() * 10).toString()
-//         ).join("");
-    
-//         return letters + digits;
-// }
-
-// private generateUniqueId(): string {
-//   let newId: string;
-// do {
-//   newId = this.generateRandomId()}
-// while (UniqueIdGenerator.userIds.has(newId))
-
-//   UniqueIdGenerator.userIds.add(newId)
-//   return newId;
-// }
-
-
-// public releaseId(id: string): void {
-//   UniqueIdGenerator.userIds.delete(id)
-  
-// }
-
-// public static resetAll(): void {
-//   UniqueIdGenerator.userIds.clear()
-
-// }
-
-// }
+// Try generating all 10101 names = availableNames
+// Then assign name randomly without repeating.
