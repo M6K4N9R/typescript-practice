@@ -481,63 +481,76 @@
 // console.log(matrix1.columns)
 
 // =============================== # Robot
-
 export class Robot {
-  private static availableNames: [] = [];
-  private _name: string;
-
+  private static usedNames: Set<string> = new Set();
+  private static availableNames: string[] = [];
+  private _name: string | null = null;
 
   constructor() {
-    this._name = this.generateUniqueName();
+    this.resetName();
   }
 
   public get name(): string {
+    if (!this._name) {
+      this._name = this.generateUniqueName();
+    }
     return this._name;
   }
 
   public resetName(): void {
-    Robot.availableNames.pop(this._name)
-    this._name = this.generateUniqueName()
+    if (this._name) {
+      Robot.availableNames.push(this._name);
+      Robot.usedNames.delete(this._name);
+    }
+    this._name = null;
   }
 
-  
   private generateUniqueName(): string {
-
-let newName: string;
-do {
-  newName = this.generateRandomName();
-} while (Robot.usedNames.has(newName));
-
-Robot.usedNames.add(newName);
-return newName;
+    if (Robot.availableNames.length === 0) {
+      this.generateMoreNames();
+    }
+    const newName = Robot.availableNames.pop()!;
+    Robot.usedNames.add(newName);
+    return newName;
   }
 
-  private generateRandomName() {
-    const letters = Array.from({ length: 4 }, () =>
-      String.fromCharCode(65 + Math.floor(Math.random() * 26))
-    ).join("");
-
-    const digits = Array.from({ length: 5 }, () =>
-      Math.floor(Math.random() * 10).toString()
-    ).join("");
-
-    return letters[0] + letters[3] + digits.slice(2);
+  private generateMoreNames(): void {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    for (let i = 0; i < 26; i++) {
+      for (let j = 0; j < 26; j++) {
+        for (let k = 0; k < 1000; k++) {
+          const name = `${letters[i]}${letters[j]}${k.toString().padStart(3, '0')}`;
+          if (!Robot.usedNames.has(name)) {
+            Robot.availableNames.push(name);
+          }
+        }
+      }
+    }
+    this.shuffleArray(Robot.availableNames);
   }
+
+  private shuffleArray(array: string[]): void {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
   public static releaseNames(): void {
-  Robot.usedNames.clear();
+    Robot.usedNames.clear();
+    Robot.availableNames = [];
   }
-
 }
 
-
-
 const robot1 = new Robot();
-console.log("Robot created");
-console.log(`Robot name: ${robot1.name}`);
-console.log(`Robot name again: ${robot1.name}`);
+const robot2 = new Robot();
+const robot3 = new Robot();
 
 
-console.log(robot1);
+console.log("robot1", robot1.name);
+console.log("robot2", robot2.name);
+console.log("robot3", robot3.name);
 
-// Try generating all 10101 names = availableNames
-// Then assign name randomly without repeating.
+
+robot2.resetName()
+console.log("robot2", robot2.name);
