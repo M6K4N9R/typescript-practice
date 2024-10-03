@@ -55,21 +55,18 @@
 
 const getHiddenCard = (card: number, stars: number = 4): string => {
 
-  const regex = /\d/g
   const cardStr = card.toString();
 
   if (cardStr.length !== 16) {
     throw new Error("Card number must contain 16 digits.")
   }
-  const cardArr = cardStr.split('')
-  let lastFourDigits: string[] = [];
-  for (let i = 15; i > 11; i--) {
-    lastFourDigits.push(cardArr[i])
-  }
-  
-  const cardStars = cardStr.slice(0, 12).replace(regex, "*");
 
-  return cardStars.slice(-stars) + lastFourDigits.join('')
+  const hiddenPart = "*".repeat(12);
+  const lastFourDigits = cardStr.slice(-4)
+  
+
+
+  return hiddenPart.slice(0, stars) + lastFourDigits;
 
  
   }
