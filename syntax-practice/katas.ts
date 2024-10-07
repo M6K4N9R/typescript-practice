@@ -14,7 +14,7 @@ export function order(words: string): string {
   return sortedWords.join(" ");
 }
 
-console.log(order("is9 Thi5s T3est 6a"));
+console.log(order("Your order Please"));
 
 
 // 
