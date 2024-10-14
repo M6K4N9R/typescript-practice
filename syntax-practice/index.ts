@@ -40,39 +40,39 @@
 // console.log(findElement(strings, (str) => str.startsWith('b'))); // Should output: "banana"
 
 // function repeat(text: string, count: number): string {
-//   let repeatedText = ""
-//   for(let i = 0; i<count; i++) {
-//     repeatedText += text
-//     console.log(repeatedText);
+//   // let repeatedText = ""
+//   // for(let i = 0; i<count; i++) {
+//   //   repeatedText += text
+//   //   console.log(repeatedText);
     
-//   }
-//   return repeatedText
+//   // }
+//   return (text + "-").repeat(count).slice(0, -1)
 // }
 
-// console.log(repeat("wo", 5));
+// console.log(repeat("wo", 3));
 
 
 
-const getHiddenCard = (card: number, stars: number = 4): string => {
+// const getHiddenCard = (card: number, stars: number = 4): string => {
 
-  const cardStr = card.toString();
+//   const cardStr = card.toString();
 
-  if (cardStr.length !== 16) {
-    throw new Error("Card number must contain 16 digits.")
-  }
+//   if (cardStr.length !== 16) {
+//     throw new Error("Card number must contain 16 digits.")
+//   }
 
-  const hiddenPart = "*".repeat(12);
-  const lastFourDigits = cardStr.slice(-4)
+//   const hiddenPart = "*".repeat(12);
+//   const lastFourDigits = cardStr.slice(-4)
   
 
 
-  return hiddenPart.slice(0, stars) + lastFourDigits;
+//   return hiddenPart.slice(0, stars) + lastFourDigits;
 
  
-  }
+//   }
  
   
-  export default getHiddenCard;
+//   export default getHiddenCard;
 
-  console.log(getHiddenCard(3648763524183546, 5));
+//   console.log(getHiddenCard(3648763524183546, 5));
   
