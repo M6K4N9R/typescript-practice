@@ -88,59 +88,81 @@
     
     // ========================================================= Pagination
     
-    // export class PaginationHelper {
-    //   constructor(collection, itemsPerPage) {
-    //   // The constructor takes in an array of items and a integer indicating how many
-    //   // items fit within a single page
-    //   }
-    //   itemCount() {
-    //   // returns the number of items within the entire collection
-    //   }
-    //   pageCount() {
-    //   // returns the number of pages
-    //   }
-    //   pageItemCount(pageIndex) {
-    //   // returns the number of items on the current page. page_index is zero based.
-    //   // this method should return -1 for pageIndex values that are out of range
-    //   }
-    //   pageIndex(itemIndex) {
-    //   // determines what page an item is on. Zero based indexes
-    //   // this method should return -1 for itemIndex values that are out of range
-    //   }
-    // }
-    
-    class Person {
-      name: string;
-      lastLogIn: string;
-      likes: number
+    export class PaginationHelper {
+private collection: any[];
+private itemsPerPage: number;
 
-      constructor(name: string);
-      constructor(name: string, lastLogIn: string, likes: number);
-      constructor(name: string, lastLogin?: string, likes?: number) {
-this.name = name;
-this.lastLogIn = lastLogin ?? "";
-this.likes = likes ?? 0;
-
+      constructor(collection: any[], itemsPerPage: number) {
+      
+      this.collection = collection;
+      this.itemsPerPage = itemsPerPage;
       }
-
-
-      introduce(): string {
-if(this.lastLogIn === "") {
-  return `Hi ${this.name}. Welcome to new APP`
-} else {
-  return `Hi ${this.name}. We saw us last time on ${this.lastLogIn}. Since then you had ${this.likes}`
-
-}
+      itemCount(): number {
+        return this.collection.length
       }
+      pageCount() {
+      return Math.ceil(this.collection.length / this.itemsPerPage)
+      }
+      pageItemCount(pageIndex: number): number {
+        if(pageIndex < 0 || pageIndex >= this.pageCount()) {
+          return -1
+        } else if(pageIndex === this.pageCount() - 1){
+          return this.itemCount() % this.itemsPerPage || this.itemsPerPage
+        } return this.itemsPerPage
+      
+      }
+      pageIndex(itemIndex: number): number {
+        if(itemIndex < 0 || itemIndex >= this.itemCount()) {return -1
+        
+
+        } return Math.floor(itemIndex / this.itemsPerPage)
+        }
+      
     }
+    
 
-    const person1 = new Person("James", "11/09/2024", 0);
+    let helper = new PaginationHelper(["a", "b", "c", "d", "d"], 2)
+console.log("pageCount ", helper.pageCount());
+console.log("itemCount ", helper.itemCount());
+console.log("pageItemCount ", helper.pageItemCount(2));
+console.log("pageIndex ", helper.pageIndex(4));
 
-    console.log(person1.introduce());
+
+    // ========================================================= Constructor Overloads
+
+
+//     class Person {
+//       name: string;
+//       lastLogIn: string;
+//       likes: number
+
+//       constructor(name: string);
+//       constructor(name: string, lastLogIn: string, likes: number);
+//       constructor(name: string, lastLogin?: string, likes?: number) {
+// this.name = name;
+// this.lastLogIn = lastLogin ?? "";
+// this.likes = likes ?? 0;
+
+//       }
+
+
+//       introduce(): string {
+// if(this.lastLogIn === "") {
+//   return `Hi ${this.name}. Welcome to new APP`
+// } else {
+//   return `Hi ${this.name}. We saw us last time on ${this.lastLogIn}. Since then you had ${this.likes}`
+
+// }
+//       }
+//     }
+
+//     const person1 = new Person("James", "11/09/2024", 0);
+
+//     console.log(person1.introduce());
     
     
-        const person2 = new Person("James");
+//         const person2 = new Person("James");
     
-        console.log(person2.introduce());
+//         console.log(person2.introduce());
 
     
