@@ -46,55 +46,101 @@
 
 // ========================================================= Help the bookseller !
 
-type StockItem = string;
-type Category = string;
-type StockList = StockItem[] | { [key: string]: StockItem };
-type CategoryList = Category[] | { [key: string]: Category };
+// type StockItem = string;
+// type Category = string;
+// type StockList = StockItem[] | { [key: string]: StockItem };
+// type CategoryList = Category[] | { [key: string]: Category };
 
-function stockSummary(listOfArt: StockList, listOfCat: CategoryList): string {
+// function stockSummary(listOfArt: StockList, listOfCat: CategoryList): string {
   
-  if (Array.isArray(listOfArt) && listOfArt.length === 0) return "";
-  if (Array.isArray(listOfCat) && listOfCat.length === 0) return "";
+//   if (Array.isArray(listOfArt) && listOfArt.length === 0) return "";
+//   if (Array.isArray(listOfCat) && listOfCat.length === 0) return "";
 
+
+//   const stockList = Array.isArray(listOfArt) ? listOfArt : Object.values(listOfArt);
+//   const categories = Array.isArray(listOfCat) ? listOfCat : Object.values(listOfCat);
+
+
+//   const categoryTotals = new Map<string, number>();
+
+
+//   categories.forEach(cat => categoryTotals.set(cat, 0));
+
+
+//   stockList.forEach(item => {
+  //     const [code, quantityStr] = item.split(' ');
+  //     const category = code[0];
+  //     const quantity = parseInt(quantityStr, 10);
   
-  const stockList = Array.isArray(listOfArt) ? listOfArt : Object.values(listOfArt);
-  const categories = Array.isArray(listOfCat) ? listOfCat : Object.values(listOfCat);
+  //     if (categoryTotals.has(category)) {
+    //       categoryTotals.set(category, (categoryTotals.get(category) || 0) + quantity);
+    //     }
+    //   });
+    
+    
+    //   const result = categories.map(cat => 
+    //     `(${cat} : ${categoryTotals.get(cat)})`
+    //   ).join(' - ');
+    
+    //   return result;
+    // }
+    
+    
+    // ========================================================= Pagination
+    
+    // export class PaginationHelper {
+    //   constructor(collection, itemsPerPage) {
+    //   // The constructor takes in an array of items and a integer indicating how many
+    //   // items fit within a single page
+    //   }
+    //   itemCount() {
+    //   // returns the number of items within the entire collection
+    //   }
+    //   pageCount() {
+    //   // returns the number of pages
+    //   }
+    //   pageItemCount(pageIndex) {
+    //   // returns the number of items on the current page. page_index is zero based.
+    //   // this method should return -1 for pageIndex values that are out of range
+    //   }
+    //   pageIndex(itemIndex) {
+    //   // determines what page an item is on. Zero based indexes
+    //   // this method should return -1 for itemIndex values that are out of range
+    //   }
+    // }
+    
+    class Person {
+      name: string;
+      lastLogIn: string;
+      likes: number
 
-  
-  const categoryTotals = new Map<string, number>();
+      constructor(name: string);
+      constructor(name: string, lastLogIn: string, likes: number);
+      constructor(name: string, lastLogin?: string, likes?: number) {
+this.name = name;
+this.lastLogIn = lastLogin ?? "";
+this.likes = likes ?? 0;
 
- 
-  categories.forEach(cat => categoryTotals.set(cat, 0));
+      }
 
-  
-  stockList.forEach(item => {
-    const [code, quantityStr] = item.split(' ');
-    const category = code[0];
-    const quantity = parseInt(quantityStr, 10);
 
-    if (categoryTotals.has(category)) {
-      categoryTotals.set(category, (categoryTotals.get(category) || 0) + quantity);
-    }
-  });
+      introduce(): string {
+if(this.lastLogIn === "") {
+  return `Hi ${this.name}. Welcome to new APP`
+} else {
+  return `Hi ${this.name}. We saw us last time on ${this.lastLogIn}. Since then you had ${this.likes}`
 
- 
-  const result = categories.map(cat => 
-    `(${cat} : ${categoryTotals.get(cat)})`
-  ).join(' - ');
-
-  return result;
 }
+      }
+    }
 
+    const person1 = new Person("James", "11/09/2024", 0);
 
+    console.log(person1.introduce());
+    
+    
+        const person2 = new Person("James");
+    
+        console.log(person2.introduce());
 
-
-
-
-
-// L = {"ABART 20", "CDXEF 50", "BKWRK 25", "BTSQZ 89", "DRTYM 60"}.
-// or
-// L = ["ABART 20", "CDXEF 50", "BKWRK 25", "BTSQZ 89", "DRTYM 60"] 
-
-// M = {"A", "B", "C", "W"} 
-// or
-// M = ["A", "B", "C", "W"]
+    
