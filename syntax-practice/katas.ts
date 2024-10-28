@@ -168,25 +168,67 @@
     // ========================================================= Fix string case
 
 
-export function solve(s: string): string {
-  let upperCount = 0;
-  let lowerCount = 0;
+// export function solve(s: string): string {
+//   let upperCount = 0;
+//   let lowerCount = 0;
 
  
-  for (let char of s) {
-    if (char === char.toUpperCase()) {
-      upperCount++;
-    } else {
-      lowerCount++;
-    }
-  }
+//   for (let char of s) {
+//     if (char === char.toUpperCase()) {
+//       upperCount++;
+//     } else {
+//       lowerCount++;
+//     }
+//   }
 
  
-  if (upperCount > lowerCount) {
-    return s.toUpperCase();
-  }
+//   if (upperCount > lowerCount) {
+//     return s.toUpperCase();
+//   }
   
-  return s.toLowerCase();
-}
+//   return s.toLowerCase();
+// }
 
+    // ========================================================= Simple time difference with just JS
+
+
+    function solve(times: string[]): string {
+     
+      const uniqueTimes = Array.from(new Set(times)).sort();
+    
+      let maxInterval = 0;
+    
+      
+      for (let i = 0; i < uniqueTimes.length; i++) {
+        const currentTime = convertToMinutes(uniqueTimes[i]);
+        const nextTime = convertToMinutes(uniqueTimes[(i + 1) % uniqueTimes.length]);
+        
+        let interval = nextTime - currentTime;
+        if (interval <= 0) {
+          interval += 24 * 60; 
+        }
+    
+        maxInterval = Math.max(maxInterval, interval);
+      }
+    
+      
+      const lastTime = convertToMinutes(uniqueTimes[uniqueTimes.length - 1]);
+      const firstTime = convertToMinutes(uniqueTimes[0]);
+      let wrapAroundInterval = firstTime - lastTime + 24 * 60;
+      maxInterval = Math.max(maxInterval, wrapAroundInterval);
+    
+      
+      return convertToHHMM(maxInterval);
+    }
+    
+    function convertToMinutes(time: string): number {
+      const [hours, minutes] = time.split(':').map(Number);
+      return hours * 60 + minutes;
+    }
+    
+    function convertToHHMM(minutes: number): string {
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
+      return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+    }
     
