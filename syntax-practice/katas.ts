@@ -88,44 +88,44 @@
     
     // ========================================================= Pagination
     
-    export class PaginationHelper {
-private collection: any[];
-private itemsPerPage: number;
+//     export class PaginationHelper {
+// private collection: any[];
+// private itemsPerPage: number;
 
-      constructor(collection: any[], itemsPerPage: number) {
+//       constructor(collection: any[], itemsPerPage: number) {
       
-      this.collection = collection;
-      this.itemsPerPage = itemsPerPage;
-      }
-      itemCount(): number {
-        return this.collection.length
-      }
-      pageCount() {
-      return Math.ceil(this.collection.length / this.itemsPerPage)
-      }
-      pageItemCount(pageIndex: number): number {
-        if(pageIndex < 0 || pageIndex >= this.pageCount()) {
-          return -1
-        } else if(pageIndex === this.pageCount() - 1){
-          return this.itemCount() % this.itemsPerPage || this.itemsPerPage
-        } return this.itemsPerPage
+//       this.collection = collection;
+//       this.itemsPerPage = itemsPerPage;
+//       }
+//       itemCount(): number {
+//         return this.collection.length
+//       }
+//       pageCount() {
+//       return Math.ceil(this.collection.length / this.itemsPerPage)
+//       }
+//       pageItemCount(pageIndex: number): number {
+//         if(pageIndex < 0 || pageIndex >= this.pageCount()) {
+//           return -1
+//         } else if(pageIndex === this.pageCount() - 1){
+//           return this.itemCount() % this.itemsPerPage || this.itemsPerPage
+//         } return this.itemsPerPage
       
-      }
-      pageIndex(itemIndex: number): number {
-        if(itemIndex < 0 || itemIndex >= this.itemCount()) {return -1
+//       }
+//       pageIndex(itemIndex: number): number {
+//         if(itemIndex < 0 || itemIndex >= this.itemCount()) {return -1
         
 
-        } return Math.floor(itemIndex / this.itemsPerPage)
-        }
+//         } return Math.floor(itemIndex / this.itemsPerPage)
+//         }
       
-    }
+//     }
     
 
-    let helper = new PaginationHelper(["a", "b", "c", "d", "d"], 2)
-console.log("pageCount ", helper.pageCount());
-console.log("itemCount ", helper.itemCount());
-console.log("pageItemCount ", helper.pageItemCount(2));
-console.log("pageIndex ", helper.pageIndex(4));
+//     let helper = new PaginationHelper(["a", "b", "c", "d", "d"], 2)
+// console.log("pageCount ", helper.pageCount());
+// console.log("itemCount ", helper.itemCount());
+// console.log("pageItemCount ", helper.pageItemCount(2));
+// console.log("pageIndex ", helper.pageIndex(4));
 
 
     // ========================================================= Constructor Overloads
@@ -164,5 +164,29 @@ console.log("pageIndex ", helper.pageIndex(4));
 //         const person2 = new Person("James");
     
 //         console.log(person2.introduce());
+
+    // ========================================================= Fix string case
+
+
+export function solve(s: string): string {
+  let upperCount = 0;
+  let lowerCount = 0;
+
+ 
+  for (let char of s) {
+    if (char === char.toUpperCase()) {
+      upperCount++;
+    } else {
+      lowerCount++;
+    }
+  }
+
+ 
+  if (upperCount > lowerCount) {
+    return s.toUpperCase();
+  }
+  
+  return s.toLowerCase();
+}
 
     
