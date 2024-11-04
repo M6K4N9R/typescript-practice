@@ -192,43 +192,68 @@
     // ========================================================= Simple time difference with just JS
 
 
-    function solve(times: string[]): string {
+    // function solve(times: string[]): string {
      
-      const uniqueTimes = Array.from(new Set(times)).sort();
+    //   const uniqueTimes = Array.from(new Set(times)).sort();
     
-      let maxInterval = 0;
+    //   let maxInterval = 0;
     
       
-      for (let i = 0; i < uniqueTimes.length; i++) {
-        const currentTime = convertToMinutes(uniqueTimes[i]);
-        const nextTime = convertToMinutes(uniqueTimes[(i + 1) % uniqueTimes.length]);
+    //   for (let i = 0; i < uniqueTimes.length; i++) {
+    //     const currentTime = convertToMinutes(uniqueTimes[i]);
+    //     const nextTime = convertToMinutes(uniqueTimes[(i + 1) % uniqueTimes.length]);
         
-        let interval = nextTime - currentTime;
-        if (interval <= 0) {
-          interval += 24 * 60; 
-        }
+    //     let interval = nextTime - currentTime;
+    //     if (interval <= 0) {
+    //       interval += 24 * 60; 
+    //     }
     
-        maxInterval = Math.max(maxInterval, interval);
+    //     maxInterval = Math.max(maxInterval, interval);
+    //   }
+    
+      
+    //   const lastTime = convertToMinutes(uniqueTimes[uniqueTimes.length - 1]);
+    //   const firstTime = convertToMinutes(uniqueTimes[0]);
+    //   let wrapAroundInterval = firstTime - lastTime + 24 * 60;
+    //   maxInterval = Math.max(maxInterval, wrapAroundInterval);
+    
+      
+    //   return convertToHHMM(maxInterval);
+    // }
+    
+    // function convertToMinutes(time: string): number {
+    //   const [hours, minutes] = time.split(':').map(Number);
+    //   return hours * 60 + minutes;
+    // }
+    
+    // function convertToHHMM(minutes: number): string {
+    //   const hours = Math.floor(minutes / 60);
+    //   const mins = minutes % 60;
+    //   return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+    // }
+    
+    // ========================================================= Are they the "same"?
+
+    export function comp(a1: number[] | null, a2: number[] | null): boolean {
+      if (a1 === null || a2 === null) {
+        return false;
       }
     
-      
-      const lastTime = convertToMinutes(uniqueTimes[uniqueTimes.length - 1]);
-      const firstTime = convertToMinutes(uniqueTimes[0]);
-      let wrapAroundInterval = firstTime - lastTime + 24 * 60;
-      maxInterval = Math.max(maxInterval, wrapAroundInterval);
+      if (a1.length !== a2.length) {
+        return false;
+      }
     
-      
-      return convertToHHMM(maxInterval);
-    }
+      const squaredA1 = a1.map(num => num * num);
     
-    function convertToMinutes(time: string): number {
-      const [hours, minutes] = time.split(':').map(Number);
-      return hours * 60 + minutes;
-    }
+      const sortedA1 = squaredA1.sort((a, b) => a - b);
+      const sortedA2 = a2.sort((a, b) => a - b);
     
-    function convertToHHMM(minutes: number): string {
-      const hours = Math.floor(minutes / 60);
-      const mins = minutes % 60;
-      return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+      for (let i = 0; i < sortedA1.length; i++) {
+        if (sortedA1[i] !== sortedA2[i]) {
+          return false;
+        }
+      }
+    
+      return true;
     }
     
