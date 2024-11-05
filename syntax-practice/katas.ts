@@ -234,26 +234,89 @@
     
     // ========================================================= Are they the "same"?
 
-    export function comp(a1: number[] | null, a2: number[] | null): boolean {
-      if (a1 === null || a2 === null) {
-        return false;
-      }
+    // export function comp(a1: number[] | null, a2: number[] | null): boolean {
+    //   if (a1 === null || a2 === null) {
+    //     return false;
+    //   }
     
-      if (a1.length !== a2.length) {
-        return false;
-      }
+    //   if (a1.length !== a2.length) {
+    //     return false;
+    //   }
     
-      const squaredA1 = a1.map(num => num * num);
+    //   const squaredA1 = a1.map(num => num * num);
     
-      const sortedA1 = squaredA1.sort((a, b) => a - b);
-      const sortedA2 = a2.sort((a, b) => a - b);
+    //   const sortedA1 = squaredA1.sort((a, b) => a - b);
+    //   const sortedA2 = a2.sort((a, b) => a - b);
     
-      for (let i = 0; i < sortedA1.length; i++) {
-        if (sortedA1[i] !== sortedA2[i]) {
-          return false;
+    //   for (let i = 0; i < sortedA1.length; i++) {
+    //     if (sortedA1[i] !== sortedA2[i]) {
+    //       return false;
+    //     }
+    //   }
+    
+    //   return true;
+    // }
+    
+
+    // ========================================================= My smallest code interpreter (aka Brainf**k)
+
+
+    export function brainLuck(code: string, input: string): string {
+      const memory: number[] = new Array(30000).fill(0);
+      let pointer = 0;
+      let inputPointer = 0;
+      let output = '';
+      let i = 0;
+    
+      const bracketMap = new Map<number, number>();
+      const stack: number[] = [];
+    
+      for (let j = 0; j < code.length; j++) {
+        if (code[j] === '[') {
+          stack.push(j);
+        } else if (code[j] === ']') {
+          const openBracket = stack.pop()!;
+          bracketMap.set(openBracket, j);
+          bracketMap.set(j, openBracket);
         }
       }
     
-      return true;
+      while (i < code.length) {
+        switch (code[i]) {
+          case '>':
+            pointer++;
+            break;
+          case '<':
+            pointer--;
+            break;
+          case '+':
+            memory[pointer] = (memory[pointer] + 1) % 256;
+            break;
+          case '-':
+            memory[pointer] = (memory[pointer] - 1 + 256) % 256;
+            break;
+          case '.':
+            output += String.fromCharCode(memory[pointer]);
+            break;
+          case ',':
+            if (inputPointer < input.length) {
+              memory[pointer] = input.charCodeAt(inputPointer++);
+            }
+            break;
+          case '[':
+            if (memory[pointer] === 0) {
+              i = bracketMap.get(i)!;
+            }
+            break;
+          case ']':
+            if (memory[pointer] !== 0) {
+              i = bracketMap.get(i)!;
+            }
+            break;
+        }
+        i++;
+      }
+    
+      return output;
     }
     
